@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICW-815 — IslamQA Ad Placement Strategy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap');
+:root{
+--biz:#d97706;--biz-bg:#fffbeb;--ux:#6366f1;--ux-bg:#eef2ff;--bal:#0284c7;--bal-bg:#f0f9ff;
+--ad:#8b5cf6;--ad-bg:#f5f3ff;--ad-border:#a78bfa;
+--iqa:#0f9d58;--iqa-dk:#0b7a45;
+--g50:#fafafa;--g100:#f4f4f5;--g200:#e4e4e7;--g300:#d4d4d8;--g400:#a1a1aa;--g500:#71717a;--g600:#52525b;--g700:#3f3f46;--g800:#27272a;--g900:#18181b;
+--r:12px;--rs:8px;--sh:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:var(--g800);background:var(--g100);line-height:1.5;-webkit-font-smoothing:antialiased}
+html[lang="ar"] body{font-family:'Noto Sans Arabic','Inter',sans-serif}
+.page-header{background:linear-gradient(135deg,var(--g900),var(--g700));color:#fff;padding:32px 0 0}
+.page-header h1{font-size:22px;font-weight:800}
+.page-header .sub{font-size:13px;color:var(--g400);margin-top:4px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.lang-toggle{display:flex;gap:2px;background:rgba(255,255,255,.1);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;border-radius:4px;color:var(--g400);border:none;background:none}
+.lang-btn:hover{color:#fff}.lang-btn.active{background:rgba(255,255,255,.2);color:#fff}
+.page-tabs{display:flex;gap:2px;padding-top:20px;overflow-x:auto}
+.page-tab{padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;border-radius:var(--rs) var(--rs) 0 0;white-space:nowrap;color:var(--g400);background:rgba(255,255,255,.08);transition:all .15s}
+.page-tab:hover{color:#fff;background:rgba(255,255,255,.15)}.page-tab.active{color:var(--g800);background:var(--g100)}
+.tab-content{display:none;padding:24px 0 48px}.tab-content.active{display:block}
+.summary-card{background:linear-gradient(135deg,var(--ux-bg),#fff);border:1px solid #c7d2fe;border-radius:var(--r);padding:18px 22px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.summary-card h3{font-size:14px;font-weight:700;color:var(--ux);margin-bottom:8px}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
+.card-header{padding:14px 20px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.card-body{padding:20px}
+.opt-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.opt-tab{padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;border-radius:100px;border:1.5px solid var(--g300);color:var(--g600);background:#fff;transition:all .15s;display:flex;align-items:center;gap:5px}
+.opt-tab .dot{width:8px;height:8px;border-radius:50%}
+.opt-tab.biz .dot{background:var(--biz)}.opt-tab.ux .dot{background:var(--ux)}.opt-tab.bal .dot{background:var(--bal)}
+.opt-tab.biz.active{border-color:var(--biz);color:var(--biz);background:var(--biz-bg)}
+.opt-tab.ux.active{border-color:var(--ux);color:var(--ux);background:var(--ux-bg)}
+.opt-tab.bal.active{border-color:var(--bal);color:var(--bal);background:var(--bal-bg)}
+.plat-tabs{display:flex;gap:2px;background:var(--g200);border-radius:6px;padding:2px}
+.plat-tab{padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;border-radius:4px;color:var(--g500);transition:all .15s}
+.plat-tab.active{background:#fff;color:var(--g800);box-shadow:var(--sh)}
+.option-panel{display:none}.option-panel.active{display:block}
+/* Hi-fi wireframe */
+.wf-wrap{display:flex;gap:0;align-items:flex-start}
+.wf-main{flex:1;min-width:0}.wf-side{width:210px;flex-shrink:0}
+@media(max-width:900px){.wf-wrap{flex-direction:column}.wf-side{width:100%}}
+.wf{border:1.5px solid var(--g300);border-radius:var(--rs);overflow:hidden;background:#fff;box-shadow:var(--sh);font-size:11px}
+.wf.mobile{max-width:360px;max-height:480px;overflow-y:auto}
+/* IQA Navbar */
+.iqa-nav{background:#fff;border-bottom:1px solid var(--g200);padding:0 12px;display:flex;align-items:center;gap:10px;height:44px}
+.iqa-logo{font-weight:800;font-size:14px;color:var(--iqa);letter-spacing:-.3px}
+.iqa-search{flex:1;background:var(--g100);border:1px solid var(--g200);border-radius:20px;padding:5px 12px;font-size:10px;color:var(--g400)}
+.iqa-contribute{background:var(--iqa);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:10px;font-weight:600;cursor:default}
+.iqa-lang{font-size:10px;color:var(--g500);font-weight:500}
+/* Left sidebar */
+.iqa-body{display:flex}
+.iqa-sidebar{width:160px;border-right:1px solid var(--g200);padding:10px 0;flex-shrink:0;background:var(--g50)}
+.iqa-sidebar .si{padding:6px 14px;font-size:10px;color:var(--g500);cursor:default;display:flex;align-items:center;gap:6px}
+.iqa-sidebar .si.active{color:var(--iqa);font-weight:600;background:#e8f5e9}
+.iqa-sidebar .si .ico{width:14px;text-align:center;font-size:11px}
+.iqa-main{flex:1;min-width:0}
+/* Content area */
+.iqa-content{padding:14px;display:flex;gap:14px}
+.iqa-left{flex:1;min-width:0}.iqa-right{width:190px;flex-shrink:0}
+@media(max-width:700px){.iqa-content{flex-direction:column}.iqa-right{width:100%}}
+.section-title{font-size:11px;font-weight:700;color:var(--g700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.section-title .bullet{width:4px;height:14px;background:var(--iqa);border-radius:2px}
+/* Answer cards */
+.qa-card{border:1px solid var(--g200);border-radius:6px;padding:9px 11px;margin-bottom:6px;background:#fff}
+.qa-card .q-title{font-size:10px;font-weight:600;color:var(--g700);margin-bottom:3px;line-height:1.4}
+.qa-card .q-meta{font-size:9px;color:var(--g400);display:flex;gap:8px}
+/* Answer page content */
+.answer-body{font-size:10px;color:var(--g500);line-height:1.6}
+.answer-body .ah{font-size:11px;font-weight:700;color:var(--g700);margin:10px 0 4px}
+.answer-body p{margin-bottom:6px}
+.answer-body .scholar{font-size:9px;color:var(--iqa);font-weight:600;margin-bottom:8px}
+.breadcrumb{font-size:9px;color:var(--g400);margin-bottom:8px}
+.breadcrumb span{color:var(--iqa)}
+.q-main-title{font-size:13px;font-weight:700;color:var(--g800);margin-bottom:10px;line-height:1.4}
+/* Sidebar widgets */
+.widget{border:1px solid var(--g200);border-radius:6px;padding:10px;margin-bottom:8px;background:#fff}
+.widget .wt{font-size:10px;font-weight:700;color:var(--g700);margin-bottom:6px}
+.widget .wi{font-size:9px;color:var(--g500);padding:4px 0;border-bottom:1px solid var(--g100)}
+.widget .wi:last-child{border:none}
+.cat-tag{display:inline-block;padding:2px 6px;background:var(--g100);border-radius:3px;font-size:8px;color:var(--g500);margin:2px}
+/* Search results */
+.sr-card{border:1px solid var(--g200);border-radius:6px;padding:9px 11px;margin-bottom:6px}
+.sr-card .sr-title{font-size:10px;font-weight:600;color:var(--iqa);margin-bottom:2px}
+.sr-card .sr-snip{font-size:9px;color:var(--g500);line-height:1.4;margin-bottom:3px}
+.sr-card .sr-meta{font-size:8px;color:var(--g400)}
+.search-bar-page{padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200)}
+.search-input{width:100%;background:#fff;border:1px solid var(--g300);border-radius:20px;padding:8px 14px;font-size:11px;color:var(--g700)}
+.search-tabs{display:flex;gap:0;border-bottom:1px solid var(--g200);padding:0 14px}
+.search-tab{padding:6px 12px;font-size:9px;font-weight:600;color:var(--g400);border-bottom:2px solid transparent;cursor:default}
+.search-tab.active{color:var(--iqa);border-color:var(--iqa)}
+/* Homepage sections */
+.home-section{margin-bottom:14px}
+.more-link{font-size:9px;color:var(--iqa);font-weight:600;margin-top:4px;display:block}
+.most-read .mr-item{display:flex;gap:6px;padding:4px 0;border-bottom:1px solid var(--g100);font-size:9px;align-items:baseline}
+.most-read .mr-num{font-weight:700;color:var(--iqa);font-size:10px;width:14px;flex-shrink:0}
+.most-read .mr-title{color:var(--g600);flex:1}
+.most-read .mr-views{color:var(--g400);font-size:8px;white-space:nowrap}
+/* Ad zone */
+.ad-zone{background:var(--ad-bg);border:2.5px dashed var(--ad-border);border-radius:6px;padding:8px;text-align:center;font-size:11px;font-weight:700;color:var(--ad);display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative}
+.ad-zone .dim{font-size:9px;font-weight:500;opacity:.7}
+.az-top{margin:0;min-height:44px;border-radius:0;border-left:none;border-right:none}
+.az-sidebar{min-height:120px;margin-bottom:8px}
+.az-inline{margin:8px 0;min-height:44px}
+.az-inline.lg{min-height:70px}
+.az-sticky{min-height:44px;border-radius:0;border-left:none;border-right:none;border-bottom:none}
+.az-between{margin:6px 0;min-height:44px}
+.az-popover{min-height:70px;border-style:solid}
+/* Realistic ad banners */
+.ad-zone.has-ad{border:1px solid rgba(0,0,0,.06);border-style:solid;padding:0;text-align:left;color:inherit;flex-direction:row;font-weight:400;justify-content:flex-start;overflow:hidden}
+.ad-zone.has-ad.az-top,.ad-zone.has-ad.az-sticky{border-left:none;border-right:none}
+.ad-zone.has-ad .dim{display:none}
+.ad-banner{display:flex;align-items:center;width:100%;padding:8px 14px;gap:10px}
+.ad-banner .ad-text{flex:1;min-width:0}
+.ad-banner .ad-primary{font-size:11px;font-weight:700;line-height:1.3;margin-bottom:1px}
+.ad-banner .ad-secondary{font-size:9px;opacity:.65;line-height:1.3}
+.ad-banner .ad-cta{padding:5px 14px;border-radius:5px;font-size:10px;font-weight:700;white-space:nowrap;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.ad-zone-tag{position:absolute;top:2px;right:2px;font-size:6px;padding:1px 4px;border-radius:2px;background:rgba(0,0,0,.15);color:rgba(255,255,255,.75);pointer-events:none;z-index:1;font-weight:400}
+html[lang="ar"] .ad-zone-tag{right:auto;left:2px}
+html[lang="ar"] .ad-zone.has-ad{text-align:right}
+.has-ad.az-sidebar .ad-banner{flex-direction:column;align-items:flex-start;padding:10px 12px;height:100%}
+.has-ad.az-sidebar .ad-primary{font-size:12px;margin-bottom:2px}
+.has-ad.az-sidebar .ad-secondary{margin-bottom:auto;font-size:8px}
+.has-ad.az-sidebar .ad-cta{margin-top:6px;align-self:stretch;text-align:center;padding:6px 12px}
+.has-ad.az-inline.lg .ad-banner{padding:8px 14px}
+.has-ad.az-inline.lg .ad-primary{font-size:11px}
+.has-ad.az-sticky .ad-banner{padding:4px 10px;gap:6px}
+.has-ad.az-sticky .ad-primary{font-size:9px}
+.has-ad.az-sticky .ad-secondary{display:none}
+.has-ad.az-sticky .ad-cta{padding:3px 10px;font-size:9px}
+/* Scores, rationale */
+.scores{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap}
+.score-item{flex:1;min-width:140px}
+.score-label{font-size:10px;font-weight:600;color:var(--g500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.score-bar{height:7px;background:var(--g200);border-radius:4px;overflow:hidden}
+.score-fill{height:100%;border-radius:4px}.score-fill.ux{background:var(--ux)}.score-fill.biz{background:var(--biz)}
+.score-val{font-size:10px;font-weight:700;margin-top:2px;color:var(--g600)}
+.rationale{background:var(--g50);border-radius:var(--rs);padding:14px 16px;border:1px solid var(--g200);margin-top:14px;font-size:12px;line-height:1.6}
+.rationale h4{font-size:12px;font-weight:700;margin-bottom:8px}
+.rationale ul,.rationale ol{padding-left:16px;margin:0}.rationale li{margin-bottom:5px}
+.rationale a{color:var(--ux);text-decoration:none;font-weight:500;font-size:11px}.rationale a:hover{text-decoration:underline}
+/* Priority */
+.priority-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background .15s;text-decoration:none;color:inherit}
+.priority-item:hover{background:var(--g50)}
+.priority-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.priority-num.high{background:var(--biz-bg);color:var(--biz)}.priority-num.med{background:var(--bal-bg);color:var(--bal)}
+.priority-item .desc{font-size:13px;font-weight:500;flex:1}.priority-item .arrow{color:var(--g400)}
+.priority-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;white-space:nowrap}
+.priority-tag.biz{background:var(--biz-bg);color:var(--biz)}.priority-tag.ux{background:var(--ux-bg);color:var(--ux)}.priority-tag.bal{background:var(--bal-bg);color:var(--bal)}
+.pri-note{padding:2px 16px 10px 56px;font-size:11px;color:var(--g500);line-height:1.5;border-bottom:1px solid var(--g200);margin:0}
+.spec-table{width:100%;border-collapse:collapse;font-size:12px}
+.spec-table th{text-align:left;padding:8px 12px;background:var(--g100);font-weight:600;color:var(--g600);font-size:11px}
+.spec-table td{padding:8px 12px;border-bottom:1px solid var(--g200)}
+.zone-badge{display:inline-flex;padding:2px 8px;background:var(--ad-bg);color:var(--ad);border-radius:4px;font-size:11px;font-weight:600}
+.blocker{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--rs);padding:14px 16px;margin-top:16px}
+.blocker h4{font-size:13px;font-weight:700;color:#dc2626;margin-bottom:4px}
+.blocker p{font-size:12px;color:var(--g700)}
+.ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.ctx-grid{grid-template-columns:1fr}}
+.ctx-card{background:#fff;border:1px solid var(--g200);border-radius:var(--rs);padding:16px;box-shadow:var(--sh)}
+.ctx-card h4{font-size:13px;font-weight:700;margin-bottom:8px}
+.ctx-card p{font-size:12px;color:var(--g600);line-height:1.6}
+.ctx-card a{color:var(--ux);font-size:11px;text-decoration:none;font-weight:500}
+.popover-demo{width:210px;background:#fff;border-radius:var(--rs);box-shadow:0 4px 12px rgba(0,0,0,.12);border:1px solid var(--g200);padding:12px;margin-top:8px}
+.popover-demo h5{font-size:12px;font-weight:700;margin-bottom:4px}
+.popover-demo p{font-size:10px;color:var(--g500);margin-bottom:6px}
+.popover-demo .btn{display:inline-block;padding:4px 10px;background:var(--ad);color:#fff;border-radius:4px;font-size:10px;font-weight:600;text-decoration:none}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g500);margin-bottom:12px}
+/* Dimmed content = gray, ads = purple and prominent */
+.iqa-sidebar,.iqa-nav,.qa-card,.widget,.sr-card,.answer-body,.breadcrumb,.q-main-title,.most-read,.home-section,.search-tabs,.iqa-footer{opacity:.7}
+.ad-zone{opacity:1!important;z-index:2}
+.iqa-footer{padding:8px 14px;background:var(--g100);border-top:1px solid var(--g200);font-size:8px;color:var(--g400);text-align:center}
+.native-ad{border:1px solid var(--ad-border)!important;background:var(--ad-bg)!important;position:relative;opacity:1!important}
+.native-ad .q-title{color:#5b21b6!important;font-weight:700!important}
+.native-ad .q-meta{color:#6d28d9!important;opacity:.85}
+.native-ad .sr-title{color:#5b21b6!important;font-weight:700!important}
+.native-ad .sr-snip{color:#6d28d9!important;opacity:.85}
+.native-ad .sr-meta{color:#7c3aed!important}
+.native-ad-footnote{font-size:9px;color:var(--g400);margin-top:6px;font-style:italic;padding:4px 0;border-top:1px solid var(--g200)}
+.ad-ref{font-size:.65em;vertical-align:super;font-weight:600;opacity:.7;margin-left:1px;line-height:1}
+html[lang="ar"] .ad-ref{margin-left:0;margin-right:1px}
+.rationale ol{padding-left:20px;margin:0;list-style:none;counter-reset:rat-counter}
+.rationale ol li{margin-bottom:5px;counter-increment:rat-counter;position:relative;padding-left:22px}
+.rationale ol li::before{content:counter(rat-counter);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--ad);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* Dismiss button */
+.ad-dismiss{position:absolute;top:2px;right:4px;width:16px;height:16px;border:none;background:rgba(0,0,0,.15);color:#fff;font-size:10px;line-height:16px;text-align:center;border-radius:50%;cursor:pointer;z-index:3;padding:0;font-weight:700}
+.ad-dismiss:hover{background:rgba(0,0,0,.35)}
+.ad-dismiss:focus{outline:2px solid var(--ad);outline-offset:1px}
+html[lang="ar"] .ad-dismiss{right:auto;left:4px}
+/* RTL mirroring */
+html[lang="ar"] .iqa-sidebar{border-right:none;border-left:1px solid var(--g200)}
+html[lang="ar"] .iqa-body{direction:rtl}
+html[lang="ar"] .iqa-content{direction:rtl}
+html[lang="ar"] .breadcrumb{direction:rtl}
+html[lang="ar"] .rationale ol{padding-left:0;padding-right:20px}
+html[lang="ar"] .rationale ol li{padding-left:0;padding-right:22px}
+html[lang="ar"] .rationale ol li::before{left:auto;right:0}
+html[lang="ar"] .q-meta{direction:rtl}
+html[lang="ar"] .sr-meta{direction:rtl}
+/* Accessibility — focus visible on interactive */
+.ad-zone:focus-within{outline:2px solid var(--ad);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="page-header">
+<div class="wrap">
+<div class="header-row">
+<div>
+<h1 data-t="title">ICW-815 — Ad Placement Strategy</h1>
+<p class="sub" data-t="subtitle">IslamQA.info · Contribution & Donation Banners · Research-backed recommendations</p>
+</div>
+<div class="lang-toggle">
+<button class="lang-btn active" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('ar')">عربي</button>
+</div>
+</div>
+<div class="page-tabs">
+<div class="page-tab active" onclick="showPage('answer')" data-t="tab-answer">Answer Page</div>
+<div class="page-tab" onclick="showPage('home')" data-t="tab-home">Homepage</div>
+<div class="page-tab" onclick="showPage('search')" data-t="tab-search">Search Page</div>
+<div class="page-tab" onclick="showPage('contextual')" data-t="tab-ctx">Contextual Ads</div>
+<div class="page-tab" onclick="showPage('priority')" data-t="tab-pri">Priority & Specs</div>
+</div>
+</div>
+</div>
+
+<div class="wrap">
+
+<!-- ===================== ANSWER PAGE ===================== -->
+<div id="page-answer" class="tab-content active">
+<div class="summary-card">
+<h3 data-t="sum-title">What this ticket is about</h3>
+<p data-t="sum-body">IslamQA needs contribution/donation banners on its website. The goal: find the best spots on Answer, Homepage, and Search pages so banners generate donations without ruining the reading experience. Three options per page below — pick the approach that fits.</p>
+</div>
+<div class="card">
+<div class="card-header">
+<div class="opt-tabs">
+<div class="opt-tab biz active" onclick="showOpt('answer','biz')"><span class="dot"></span> <span data-t="biz">Ad-First</span></div>
+<div class="opt-tab ux" onclick="showOpt('answer','ux')"><span class="dot"></span> <span data-t="ux">UX-First</span></div>
+<div class="opt-tab bal" onclick="showOpt('answer','bal')"><span class="dot"></span> <span data-t="bal">Balanced</span></div>
+</div>
+<div class="plat-tabs">
+<div class="plat-tab active" onclick="showPlat('answer','desktop')" data-t="desktop">Desktop</div>
+<div class="plat-tab" onclick="showPlat('answer','mobile')" data-t="mobile">Mobile</div>
+</div>
+</div>
+<div class="card-body">
+
+<!-- ANSWER BIZ DESKTOP -->
+<div id="answer-biz" class="option-panel active">
+<div id="answer-biz-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">👤</span>My account</div>
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+<div class="si"><span class="ico">✉️</span>Send a question</div>
+</div>
+<div class="iqa-main">
+<div class="ad-zone az-top">AD: 720 × 90 — Top Banner<div class="dim">Below navbar, above content</div></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span> › Menstruation & Post-Natal Bleeding</div>
+<div class="q-main-title">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question that concerns many Muslim women. The scholars have differed on this issue...</p>
+<div class="ah">The Majority View (Prohibition)</div>
+<p>Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity. Limited exceptions exist for brief phrases...</p>
+</div>
+<div class="ad-zone az-inline lg">AD: 336 × 280 — Mid-Content<div class="dim">Interrupts reading — after ~40% of answer</div></div>
+<div class="answer-body">
+<div class="ah">The Minority View (Permissibility)</div>
+<p>Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed, reasoning that no clear evidence explicitly forbids it...</p>
+<p>While reciting from memory may be permissible under some interpretations, it is forbidden to touch the mus-haf when one is in any kind of state of impurity.</p>
+</div>
+<div class="ad-zone az-inline lg">AD: 336 × 280 — Post-Answer CTA<div class="dim">After answer ends — reciprocity point</div></div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — sticky on scroll</div></div>
+<div class="widget"><div class="wt">Related Questions</div>
+<div class="wi">Is Divorce Valid during Menstruation?</div>
+<div class="wi">Sunan al-fitrah during menses</div>
+<div class="wi">If the menses lasts longer than usual</div>
+</div>
+<div class="widget"><div class="wt">Categories</div>
+<span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span><span class="cat-tag">Quran Sciences</span>
+</div>
+</div>
+</div>
+<div class="iqa-footer">© Islam Q&A 1997-2025 · About · Privacy Policy</div>
+</div>
+</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:25%"></div></div><div class="score-val">2.5 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:90%"></div></div><div class="score-val">9 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--biz)">●</span> Why Ad-First</h4><ol>
+<li>Top banner: First impression — <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=74%25%20of%20the%20viewing%20time%20was%20spent%20in%20the%20first%20two%20screenfuls" target="_blank">74% of viewing time in first two screenfuls (NNGroup)</a></li>
+<li>Mid-content: Interrupts at ~40% scroll — exploits peak attention zone</li>
+<li>Post-answer CTA: Reciprocity point — user just received full value</li>
+<li>Sticky sidebar: Passive visibility — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=Double%20Viewability" target="_blank">50% higher viewability (AdPushup)</a>, stays in view during scroll</li>
+</ol></div>
+</div>
+
+<!-- ANSWER BIZ MOBILE -->
+<div id="answer-biz-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div class="iqa-content" style="flex-direction:column;padding:10px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:12px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question...</p>
+<div class="ah">The Majority View (Prohibition)</div>
+<p>Most classical jurists hold that women cannot recite Quran during menstruation...</p>
+<p>They base this on the hadith narrated by Ibn Umar (may Allah be pleased with him), though its chain of narration has been discussed by the scholars of hadith...</p>
+</div>
+<div class="ad-zone az-inline">AD: 320 × 100 — Mid-content<div class="dim">Breaks reading flow</div></div>
+<div class="answer-body">
+<div class="ah">The Minority View</div>
+<p>Some scholars argue recitation is allowed...</p>
+<p>Sheikh al-Islam Ibn Taymiyah said: "There is no clear, authentic text from the Prophet (peace be upon him) that prevents a menstruating woman from reading Quran..."</p>
+<p>And Allah knows best.</p>
+</div>
+<div class="ad-zone az-inline lg">AD: 336 × 280 — Post-answer<div class="dim">After answer ends</div></div>
+<div class="section-title" style="margin-top:10px"><span class="bullet"></span>Related Questions</div>
+<div class="qa-card"><div class="q-title">Is Divorce Valid during Menstruation?</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card"><div class="q-title">Sunan al-fitrah during menses</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card"><div class="q-title">If the menses lasts longer than usual</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div style="margin-top:6px"><span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span><span class="cat-tag">Quran Sciences</span></div>
+</div>
+<div class="ad-zone az-sticky">AD: 320 × 100 — Sticky Bottom<div class="dim">Persistent — always visible</div></div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:20%"></div></div><div class="score-val">2 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:85%"></div></div><div class="score-val">8.5 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--biz)">●</span> Why Ad-First</h4><ol>
+<li>Mid-content: Breaks reading at peak attention — high impression rate</li>
+<li>Post-answer: Reciprocity point — user received value, ready to engage</li>
+<li>Sticky bottom: Persistent — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">40-60% CTR lift (AdPushup)</a>, ~15% viewport</li>
+</ol></div>
+</div>
+</div>
+
+<!-- ANSWER UX DESKTOP -->
+<div id="answer-ux" class="option-panel">
+<div id="answer-ux-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">👤</span>My account</div>
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+<div class="si"><span class="ico">✉️</span>Send a question</div>
+</div>
+<div class="iqa-main">
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span> › Menstruation & Post-Natal Bleeding</div>
+<div class="q-main-title">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question that concerns many Muslim women. The scholars have differed on this issue...</p>
+<div class="ah">The Majority View (Prohibition)</div>
+<p>Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity. Limited exceptions exist for brief phrases like "Bismillahi'r-Rahmani'r-Rahim"...</p>
+<div class="ah">The Minority View (Permissibility)</div>
+<p>Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed, reasoning that no clear evidence explicitly forbids it and that preventing recitation deprives women of spiritual reward.</p>
+<p>While reciting from memory may be permissible under some interpretations, it is forbidden to touch the mus-haf when one is in any kind of state of impurity.</p>
+<p>And Allah knows best.</p>
+</div>
+<div style="border-top:2px solid var(--g200);margin:14px 0"></div>
+<div class="ad-zone az-inline lg">AD: 336 × 280 — Post-Answer Only<div class="dim">Single ad — after full answer, at reciprocity point</div></div>
+</div>
+<div class="iqa-right">
+<div class="widget"><div class="wt">Related Questions</div>
+<div class="wi">Is Divorce Valid during Menstruation?</div>
+<div class="wi">Sunan al-fitrah during menses</div>
+<div class="wi">If the menses lasts longer than usual</div>
+</div>
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — static (not sticky)</div></div>
+<div class="widget"><div class="wt">Categories</div>
+<span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span>
+</div>
+</div>
+</div>
+<div class="iqa-footer">© Islam Q&A 1997-2025 · About · Privacy Policy</div>
+</div>
+</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:92%"></div></div><div class="score-val">9.2 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:35%"></div></div><div class="score-val">3.5 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--ux)">●</span> Why UX-First</h4><ol>
+<li>Post-answer only: Zero interruption — entire answer unbroken. <a href="https://www.nngroup.com/articles/reciprocity-principle/#:~:text=reciprocity" target="_blank">Reciprocity principle (NNGroup)</a></li>
+<li>Sidebar (static): Low intrusiveness — no sticky behavior, no <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=tendency%20to%20ignore%20page%20elements" target="_blank">banner blindness risk (NNGroup)</a></li>
+</ol></div>
+</div>
+<div id="answer-ux-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div class="iqa-content" style="flex-direction:column;padding:10px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:12px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question...</p>
+<div class="ah">The Majority View (Prohibition)</div>
+<p>Most classical jurists hold that women cannot recite Quran...</p>
+<p>They cite the hadith of Ibn Umar, though scholars have discussed its authenticity and chain of narration at length...</p>
+<div class="ah">The Minority View (Permissibility)</div>
+<p>Some scholars argue recitation is allowed...</p>
+<p>Ibn Taymiyah reasoned that since no authentic, explicit prohibition exists, the default ruling of permissibility applies...</p>
+<p>And Allah knows best.</p>
+</div>
+<div style="border-top:2px solid var(--g200);margin:10px 0"></div>
+<div class="ad-zone az-inline">AD: 320 × 100 — Post-Answer Only<div class="dim">Single ad after full answer</div></div>
+<div class="section-title" style="margin-top:10px"><span class="bullet"></span>Related Questions</div>
+<div class="qa-card"><div class="q-title">Is Divorce Valid during Menstruation?</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card"><div class="q-title">Sunan al-fitrah during menses</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card"><div class="q-title">If the menses lasts longer than usual</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div style="margin-top:6px"><span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span><span class="cat-tag">Quran Sciences</span></div>
+</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:96%"></div></div><div class="score-val">9.6 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:22%"></div></div><div class="score-val">2.2 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--ux)">●</span> Why UX-First</h4><ol>
+<li>Post-answer only: Cleanest mobile experience — no sticky elements. <a href="https://www.nngroup.com/articles/ad-placement-study/#:~:text=pleasant" target="_blank">Pleasant ad experience drives return visits (NNGroup)</a></li>
+</ol></div>
+</div>
+</div>
+
+<!-- ANSWER BAL DESKTOP -->
+<div id="answer-bal" class="option-panel">
+<div id="answer-bal-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">👤</span>My account</div>
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+<div class="si"><span class="ico">✉️</span>Send a question</div>
+</div>
+<div class="iqa-main">
+<div class="ad-zone az-top">AD: 720 × 90 — Top Banner<div class="dim">Below navbar — scrolls away with content</div></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span> › Menstruation & Post-Natal Bleeding</div>
+<div class="q-main-title">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question that concerns many Muslim women...</p>
+<div class="ah">The Majority View (Prohibition)</div>
+<p>Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity...</p>
+<div class="ah">The Minority View (Permissibility)</div>
+<p>Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed...</p>
+<p>And Allah knows best.</p>
+</div>
+<div style="border-top:2px solid var(--g200);margin:14px 0"></div>
+<div class="ad-zone az-inline lg">AD: 336 × 280 — Post-Answer CTA<div class="dim">After answer — no mid-content interruption</div></div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — sticky on scroll</div></div>
+<div class="widget"><div class="wt">Related Questions</div>
+<div class="wi">Is Divorce Valid during Menstruation?</div>
+<div class="wi">Sunan al-fitrah during menses</div>
+<div class="qa-card native-ad" style="margin-top:4px"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+</div>
+</div>
+</div>
+<div class="iqa-footer">© Islam Q&A 1997-2025 · About · Privacy Policy</div>
+</div>
+</div>
+</div>
+<div class="native-ad-footnote">* Native card: Anti-banner-blindness — styled as editorial content with subtle purple border. Blends with Related Questions, processed as content rather than ad.</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:68%"></div></div><div class="score-val">6.8 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:68%"></div></div><div class="score-val">6.8 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--bal)">●</span> Why Balanced</h4><ol>
+<li>Top banner: First impression — <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=above%20the%20fold" target="_blank">above-the-fold gets most attention (NNGroup)</a>, scrolls away with content</li>
+<li>Post-answer CTA: Reciprocity point — user just received full value, reading flow unbroken</li>
+<li>Sticky sidebar: Passive visibility — stays in view during scroll, fewer zones = less <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=Do%20not%20mix%20content%20and%20ads" target="_blank">ad fatigue (NNGroup)</a></li>
+</ol></div>
+</div>
+<div id="answer-bal-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div class="iqa-content" style="flex-direction:column;padding:10px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:12px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body">
+<div class="scholar">Sheikh Muhammed Salih Al-Munajjid</div>
+<p>Praise be to Allah. This is an important question...</p>
+<div class="ah">The Majority View</div>
+<p>Most classical jurists hold that women cannot recite Quran...</p>
+<p>This view is held by the Hanafi, Shafi'i and Hanbali schools, based on analogy with the one who is junub...</p>
+<div class="ah">The Minority View</div>
+<p>Some scholars argue recitation is allowed...</p>
+<p>The Maliki school and some Hanbali scholars permit it, noting the absence of a clear prohibition in the Sunnah...</p>
+<p>And Allah knows best.</p>
+</div>
+<div style="border-top:2px solid var(--g200);margin:10px 0"></div>
+<div class="ad-zone az-inline">AD: 320 × 100 — Post-Answer<div class="dim">After answer</div></div>
+<div class="section-title" style="margin-top:10px"><span class="bullet"></span>Related Questions</div>
+<div class="qa-card"><div class="q-title">Is Divorce Valid during Menstruation?</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card"><div class="q-title">Sunan al-fitrah during menses</div><div class="q-meta"><span>Family Fiqh</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div style="margin-top:6px"><span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span></div>
+</div>
+<div class="ad-zone az-sticky">AD: 320 × 50 — Slim Sticky<div class="dim">Dismissible ×</div></div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:58%"></div></div><div class="score-val">5.8 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:58%"></div></div><div class="score-val">5.8 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--bal)">●</span> Why Balanced</h4><ol>
+<li>Post-answer: Reciprocity point — natural stopping point after full answer</li>
+<li>Slim sticky (50px): Minimal viewport — <a href="https://web.dev/articles/cls#:~:text=content%20that%20shifts%20layout%20after%20rendering%20is%20a%20poor%20user%20experience" target="_blank">smaller layout shift (web.dev)</a>, dismissible via sessionStorage</li>
+</ol></div>
+</div>
+</div>
+
+</div></div></div>
+
+<!-- ===================== HOMEPAGE ===================== -->
+<div id="page-home" class="tab-content">
+<div class="card"><div class="card-header">
+<div class="opt-tabs">
+<div class="opt-tab biz active" onclick="showOpt('home','biz')"><span class="dot"></span> <span data-t="biz">Ad-First</span></div>
+<div class="opt-tab ux" onclick="showOpt('home','ux')"><span class="dot"></span> <span data-t="ux">UX-First</span></div>
+<div class="opt-tab bal" onclick="showOpt('home','bal')"><span class="dot"></span> <span data-t="bal">Balanced</span></div>
+</div>
+<div class="plat-tabs">
+<div class="plat-tab active" onclick="showPlat('home','desktop')" data-t="desktop">Desktop</div>
+<div class="plat-tab" onclick="showPlat('home','mobile')" data-t="mobile">Mobile</div>
+</div>
+</div><div class="card-body">
+
+<!-- HOME BIZ DESKTOP -->
+<div id="home-biz" class="option-panel active"><div id="home-biz-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+<div class="si"><span class="ico">✉️</span>Send a question</div>
+</div>
+<div class="iqa-main">
+<div class="ad-zone az-top">AD: 720 × 90 — Hero Banner<div class="dim">Prime position — first thing users see</div></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="home-section"><div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer and the iqamah...</div><div class="q-meta"><span>27/08/2026</span><span>📥 💬</span></div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction to the secret habit...</div><div class="q-meta"><span>25/08/2026</span><span>📥 💬</span></div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span><span>📥 💬</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<a class="more-link">More ›</a>
+</div>
+<div class="ad-zone az-between">AD: 720 × 90<div class="dim">Between New Answers & Most Read</div></div>
+<div class="home-section most-read"><div class="section-title"><span class="bullet"></span>Most Read Answers</div>
+<div class="mr-item"><span class="mr-num">1</span><span class="mr-title">Is Masturbation Haram in Islam?</span><span class="mr-views">2.9M</span></div>
+<div class="mr-item"><span class="mr-num">2</span><span class="mr-title">Is Music Haram?</span><span class="mr-views">1.8M</span></div>
+<div class="mr-item"><span class="mr-num">3</span><span class="mr-title">How to Make Ghusl for Major Impurity</span><span class="mr-views">1.2M</span></div>
+</div>
+<div class="home-section"><div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div><div class="q-meta"><span>15/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">Fasting on Ashura: Complete Guide</div><div class="q-meta"><span>10/08/2026</span></div></div>
+</div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — sticky</div></div>
+<div class="widget"><div class="wt">Categories</div>
+<span class="cat-tag">Basic Tenets (131)</span><span class="cat-tag">Hadith (76)</span><span class="cat-tag">Family Fiqh (113)</span><span class="cat-tag">Quran (134)</span>
+</div>
+<div class="widget"><div class="wt">Books</div>
+<div class="wi">70 Matters Related to Fasting</div>
+<div class="wi">Disallowed Matters</div>
+</div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:22%"></div></div><div class="score-val">2.2 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:85%"></div></div><div class="score-val">8.5 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--biz)">●</span> Why Ad-First</h4><ol>
+<li>Hero banner: Captures <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/#:~:text=horizontal%20movement" target="_blank">F-pattern first horizontal scan (NNGroup)</a> — prime position</li>
+<li>Native card: Anti-banner-blindness — blends with New Answers list, replaces second section-break banner</li>
+<li>Between New Answers &amp; Most Read: Natural section break — users tolerate ads between content groups</li>
+<li>Sticky sidebar: Persistent visibility during page scroll</li>
+</ol></div>
+</div>
+<div id="home-biz-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div class="ad-zone az-top" style="border-radius:0">AD: 320 × 100<div class="dim">Top</div></div>
+<div style="padding:10px">
+<div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div><div class="q-meta"><span>27/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction...</div><div class="q-meta"><span>25/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">Ruling on reading Quran without wudu</div><div class="q-meta"><span>21/08/2026</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="section-title"><span class="bullet"></span>Most Read</div>
+<div class="qa-card"><div class="q-title">Is Masturbation Haram in Islam?</div></div>
+<div class="qa-card"><div class="q-title">Is Music Haram?</div></div>
+<div class="qa-card"><div class="q-title">How to Make Ghusl for Major Impurity</div></div>
+<div class="ad-zone az-between">AD: 320 × 100<div class="dim">Between sections</div></div>
+<div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div></div>
+<div class="qa-card"><div class="q-title">Fasting on Ashura: Complete Guide</div></div>
+</div>
+<div class="ad-zone az-sticky">AD: 320 × 100 — Sticky Bottom</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:18%"></div></div><div class="score-val">1.8 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:80%"></div></div><div class="score-val">8 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--biz)">●</span> Why Ad-First</h4><ol>
+<li>Top banner: First thing user sees — scrolls away with content</li>
+<li>Native card: Replaces first section-break banner — blends with New Answers</li>
+<li>Between Most Read &amp; Articles: Section break — natural pause</li>
+<li>Sticky bottom: Persistent — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">40-60% CTR lift (AdPushup)</a></li>
+</ol></div>
+</div></div>
+
+<!-- HOME UX DESKTOP -->
+<div id="home-ux" class="option-panel"><div id="home-ux-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+</div>
+<div class="iqa-main">
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="home-section"><div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div><div class="q-meta"><span>27/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction to the secret habit...</div><div class="q-meta"><span>25/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span></div></div>
+</div>
+<div class="home-section most-read"><div class="section-title"><span class="bullet"></span>Most Read Answers</div>
+<div class="mr-item"><span class="mr-num">1</span><span class="mr-title">Is Masturbation Haram in Islam?</span><span class="mr-views">2.9M</span></div>
+<div class="mr-item"><span class="mr-num">2</span><span class="mr-title">Is Music Haram?</span><span class="mr-views">1.8M</span></div>
+<div class="mr-item"><span class="mr-num">3</span><span class="mr-title">How to Make Ghusl for Major Impurity</span><span class="mr-views">1.2M</span></div>
+</div>
+<div class="home-section"><div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div></div>
+<div class="qa-card"><div class="q-title">Fasting on Ashura: Complete Guide</div></div>
+</div>
+</div>
+<div class="iqa-right">
+<div class="widget"><div class="wt">Categories</div>
+<span class="cat-tag">Basic Tenets (131)</span><span class="cat-tag">Hadith (76)</span><span class="cat-tag">Family Fiqh (113)</span>
+</div>
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar only — static</div></div>
+<div class="widget"><div class="wt">Books</div>
+<div class="wi">70 Matters Related to Fasting</div>
+</div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:95%"></div></div><div class="score-val">9.5 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:18%"></div></div><div class="score-val">1.8 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--ux)">●</span> Why UX-First</h4><ol>
+<li>Sidebar only: Content area completely ad-free — avoids <a href="https://www.nngroup.com/articles/homepage-real-estate-allocation/#:~:text=clutter" target="_blank">clutter that causes missed content (NNGroup)</a></li>
+</ol></div>
+</div>
+<div id="home-ux-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div style="padding:10px">
+<div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction...</div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div></div>
+<div class="qa-card"><div class="q-title">Ruling on reading Quran without wudu</div></div>
+<div class="section-title"><span class="bullet"></span>Most Read</div>
+<div class="qa-card"><div class="q-title">Is Masturbation Haram in Islam?</div></div>
+<div class="qa-card"><div class="q-title">Is Music Haram?</div></div>
+<div class="qa-card"><div class="q-title">How to Make Ghusl for Major Impurity</div></div>
+<div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div></div>
+<div class="qa-card"><div class="q-title">Fasting on Ashura: Complete Guide</div></div>
+</div>
+</div>
+<p style="font-size:11px;color:var(--g500);margin-top:8px;font-style:italic" data-t="no-ads-mobile">No ads on mobile homepage — users navigate away quickly, minimal ROI.</p>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:100%"></div></div><div class="score-val">10 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:5%"></div></div><div class="score-val">0.5 / 10</div></div>
+</div>
+</div></div>
+
+<!-- HOME BAL DESKTOP -->
+<div id="home-bal" class="option-panel"><div id="home-bal-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si active"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+<div class="si"><span class="ico">📰</span>Articles</div>
+<div class="si"><span class="ico">📚</span>Books</div>
+</div>
+<div class="iqa-main">
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="home-section"><div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div><div class="q-meta"><span>27/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction to the secret habit...</div><div class="q-meta"><span>25/08/2026</span></div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+</div>
+<div class="home-section most-read"><div class="section-title"><span class="bullet"></span>Most Read Answers</div>
+<div class="mr-item"><span class="mr-num">1</span><span class="mr-title">Is Masturbation Haram in Islam?</span><span class="mr-views">2.9M</span></div>
+<div class="mr-item"><span class="mr-num">2</span><span class="mr-title">Is Music Haram?</span><span class="mr-views">1.8M</span></div>
+</div>
+<div class="home-section"><div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div></div>
+</div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar</div></div>
+<div class="widget"><div class="wt">Categories</div>
+<span class="cat-tag">Basic Tenets</span><span class="cat-tag">Family Fiqh</span>
+</div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:65%"></div></div><div class="score-val">6.5 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:58%"></div></div><div class="score-val">5.8 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--bal)">●</span> Why Balanced</h4><ol>
+<li>Native card: Replaces top banner — blends with New Answers, no jarring banner impression</li>
+<li>Sidebar: Passive secondary impression — content flows naturally</li>
+</ol></div>
+</div>
+<div id="home-bal-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search" style="font-size:9px">Search...</div><span style="font-size:12px">☰</span></div>
+<div style="padding:10px">
+<div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div></div>
+<div class="qa-card"><div class="q-title">She is suffering from addiction...</div></div>
+<div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="section-title"><span class="bullet"></span>Most Read</div>
+<div class="qa-card"><div class="q-title">Is Masturbation Haram in Islam?</div></div>
+<div class="qa-card"><div class="q-title">Is Music Haram?</div></div>
+<div class="section-title"><span class="bullet"></span>Articles</div>
+<div class="qa-card"><div class="q-title">What Are the Virtues of Muharram?</div></div>
+</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:67%"></div></div><div class="score-val">6.7 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:40%"></div></div><div class="score-val">4 / 10</div></div>
+</div>
+</div></div>
+</div></div></div>
+
+<!-- ===================== SEARCH PAGE ===================== -->
+<div id="page-search" class="tab-content">
+<div class="card"><div class="card-header">
+<div class="opt-tabs">
+<div class="opt-tab biz active" onclick="showOpt('search','biz')"><span class="dot"></span> <span data-t="biz">Ad-First</span></div>
+<div class="opt-tab ux" onclick="showOpt('search','ux')"><span class="dot"></span> <span data-t="ux">UX-First</span></div>
+<div class="opt-tab bal" onclick="showOpt('search','bal')"><span class="dot"></span> <span data-t="bal">Balanced</span></div>
+</div>
+<div class="plat-tabs">
+<div class="plat-tab active" onclick="showPlat('search','desktop')" data-t="desktop">Desktop</div>
+<div class="plat-tab" onclick="showPlat('search','mobile')" data-t="mobile">Mobile</div>
+</div>
+</div><div class="card-body">
+
+<!-- SEARCH BIZ -->
+<div id="search-biz" class="option-panel active"><div id="search-biz-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+<div class="si"><span class="ico">⭐</span>Essential Answers</div>
+</div>
+<div class="iqa-main">
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled></div>
+<div class="search-tabs"><span class="search-tab active">All</span><span class="search-tab">Answers</span><span class="search-tab">Articles</span></div>
+<div class="ad-zone az-top">AD: 720 × 90<div class="dim">Above results</div></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done in prayer?</div><div class="sr-snip">The prostration of forgetfulness is prescribed for three reasons: if there is an extra action, an omission, or uncertainty...</div><div class="sr-meta">Family Fiqh · 1.2M views</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">Praise be to Allah. The times of the prayers were mentioned by the Prophet (peace be upon him) in the hadith...</div><div class="sr-meta">Fiqh · 890K views</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr, and Maghrib and 'Isha when travelling...</div><div class="sr-meta">Fiqh · 650K views</div></div>
+<div class="ad-zone az-between">AD: 720 × 90<div class="dim">After 3rd result</div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding the one who deliberately missed prayers out of laziness...</div><div class="sr-meta">Fiqh · 520K views</div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language other than Arabic for one who is able to learn...</div><div class="sr-meta">Basic Tenets · 410K views</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake in his recitation of al-Fatihah...</div><div class="sr-meta">Fiqh · 280K views</div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card"><div class="sr-title">How many rak'ahs in Taraweeh?</div><div class="sr-snip">The scholars differed concerning the number of rak'ahs of Taraweeh...</div><div class="sr-meta">Fiqh · 190K views</div></div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — sticky</div></div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:15%"></div></div><div class="score-val">1.5 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:90%"></div></div><div class="score-val">9 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--biz)">●</span> Why Ad-First</h4><ol>
+<li>Top banner: Above results — captures attention before user scans results</li>
+<li>After 3rd result: <a href="https://www.nngroup.com/articles/search-ads-vs-organic/#:~:text=sponsored" target="_blank">Positions 2-4 get most clicks (NNGroup)</a> — mimics search ad placement</li>
+<li>Native card: Replaces second inline banner — blends with search results, anti-banner-blindness</li>
+<li>Sticky sidebar: Persistent visibility throughout search session</li>
+</ol></div>
+</div>
+<div id="search-biz-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><span style="font-size:12px">☰</span></div>
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled style="font-size:10px"></div>
+<div style="padding:10px">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness is prescribed...</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">Praise be to Allah. The times were mentioned...</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr...</div></div>
+<div class="ad-zone az-between">AD: 320 × 100<div class="dim">After 3rd result</div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding...</div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language...</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div></div>
+</div>
+</div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:18%"></div></div><div class="score-val">1.8 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:78%"></div></div><div class="score-val">7.8 / 10</div></div>
+</div>
+</div></div>
+
+<!-- SEARCH UX -->
+<div id="search-ux" class="option-panel"><div id="search-ux-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+</div>
+<div class="iqa-main">
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled></div>
+<div class="search-tabs"><span class="search-tab active">All</span><span class="search-tab">Answers</span><span class="search-tab">Articles</span></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness is prescribed for three reasons...</div><div class="sr-meta">Family Fiqh · 1.2M views</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">Praise be to Allah. The times of the prayers were mentioned...</div><div class="sr-meta">Fiqh · 890K views</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr...</div><div class="sr-meta">Fiqh · 650K views</div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding the one who deliberately missed...</div><div class="sr-meta">Fiqh · 520K views</div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language other than Arabic...</div><div class="sr-meta">Basic Tenets · 410K views</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake in his recitation...</div><div class="sr-meta">Fiqh · 280K views</div></div>
+<div class="sr-card"><div class="sr-title">How many rak'ahs in Taraweeh?</div><div class="sr-snip">The scholars differed concerning the number...</div><div class="sr-meta">Fiqh · 190K views</div></div>
+<div style="border-top:1px solid var(--g200);margin:10px 0"></div>
+<div class="ad-zone az-inline">AD: 720 × 90 — After All Results<div class="dim">Below pagination — single ad</div></div>
+</div>
+<div class="iqa-right">
+<div class="widget"><div class="wt">Categories</div><span class="cat-tag">Fiqh</span><span class="cat-tag">Basic Tenets</span></div>
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar — static</div></div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:92%"></div></div><div class="score-val">9.2 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:22%"></div></div><div class="score-val">2.2 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--ux)">●</span> Why UX-First</h4><ol>
+<li>After all results: Below pagination — results list fully clean, <a href="https://www.nngroup.com/articles/search-visible-and-simple/#:~:text=search" target="_blank">search stays unobstructed (NNGroup)</a></li>
+<li>Sidebar (static): Passive — most users click a result before noticing it</li>
+</ol></div>
+</div>
+<div id="search-ux-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><span style="font-size:12px">☰</span></div>
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled style="font-size:10px"></div>
+<div style="padding:10px">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness...</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">The times of the prayers were mentioned...</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers?</div><div class="sr-snip">It is permissible to combine...</div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding...</div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language...</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div></div>
+<div style="border-top:1px solid var(--g200);margin:8px 0"></div>
+<div class="ad-zone az-inline">AD: 320 × 100<div class="dim">After all results</div></div>
+</div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:94%"></div></div><div class="score-val">9.4 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:15%"></div></div><div class="score-val">1.5 / 10</div></div>
+</div>
+</div></div>
+
+<!-- SEARCH BAL -->
+<div id="search-bal" class="option-panel"><div id="search-bal-desktop" class="option-panel active">
+<div class="wf">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><div class="iqa-search">Search for a question or fatwa...</div><button class="iqa-contribute">Contribute</button><span class="iqa-lang">English ▾</span></div>
+<div class="iqa-body">
+<div class="iqa-sidebar">
+<div class="si"><span class="ico">🆕</span>New Answers</div>
+<div class="si"><span class="ico">📂</span>Category tree</div>
+</div>
+<div class="iqa-main">
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled></div>
+<div class="search-tabs"><span class="search-tab active">All</span><span class="search-tab">Answers</span><span class="search-tab">Articles</span></div>
+<div class="iqa-content">
+<div class="iqa-left">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness is prescribed for three reasons...</div><div class="sr-meta">Family Fiqh · 1.2M views</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">Praise be to Allah. The times of the prayers were mentioned...</div><div class="sr-meta">Fiqh · 890K views</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr...</div><div class="sr-meta">Fiqh · 650K views</div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding...</div><div class="sr-meta">Fiqh · 520K views</div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language other than Arabic...</div><div class="sr-meta">Basic Tenets · 410K views</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div><div class="sr-meta">Fiqh · 280K views</div></div>
+<div class="sr-card"><div class="sr-title">How many rak'ahs in Taraweeh?</div><div class="sr-snip">The scholars differed concerning...</div><div class="sr-meta">Fiqh · 190K views</div></div>
+</div>
+<div class="iqa-right">
+<div class="ad-zone az-sidebar">AD: 336 × 280<div class="dim">Sidebar</div></div>
+<div class="widget"><div class="wt">Categories</div><span class="cat-tag">Fiqh</span><span class="cat-tag">Basic Tenets</span></div>
+</div>
+</div></div></div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:56%"></div></div><div class="score-val">5.6 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:64%"></div></div><div class="score-val">6.4 / 10</div></div>
+</div>
+<div class="rationale"><h4><span style="color:var(--bal)">●</span> Why Balanced</h4><ol>
+<li>Native card: Replaces inline banner — blends with search results after 3rd, anti-banner-blindness</li>
+<li>Sidebar: Passive secondary impression — doesn't compete with results</li>
+</ol></div>
+</div>
+<div id="search-bal-mobile" class="option-panel">
+<div class="wf mobile">
+<div class="iqa-nav"><span class="iqa-logo">IslamQA</span><span style="font-size:12px">☰</span></div>
+<div class="search-bar-page"><input class="search-input" value="prayer times" disabled style="font-size:10px"></div>
+<div style="padding:10px">
+<div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness...</div></div>
+<div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">The times of the prayers were mentioned...</div></div>
+<div class="sr-card"><div class="sr-title">Can you combine prayers?</div><div class="sr-snip">It is permissible to combine...</div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed...</div></div>
+<div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible...</div></div>
+<div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div></div>
+<div class="sr-card"><div class="sr-title">How many rak'ahs in Taraweeh?</div><div class="sr-snip">The scholars differed concerning...</div></div>
+</div></div>
+<div class="scores">
+<div class="score-item"><div class="score-label" data-t="ux-q">UX Quality</div><div class="score-bar"><div class="score-fill ux" style="width:52%"></div></div><div class="score-val">5.2 / 10</div></div>
+<div class="score-item"><div class="score-label" data-t="rev">Revenue Potential</div><div class="score-bar"><div class="score-fill biz" style="width:55%"></div></div><div class="score-val">5.5 / 10</div></div>
+</div>
+</div></div>
+</div></div></div>
+
+<!-- ===================== CONTEXTUAL ===================== -->
+<div id="page-contextual" class="tab-content">
+<div class="section-label" data-t="ctx-label">Additional Placement Ideas</div>
+<div class="ctx-grid">
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-popover-title">Bottom-Right Popover</span></h4>
+<p data-t="ctx-popover-desc">Non-blocking slide-in after 30s or 60% scroll. Dismissible, sessionStorage (once per session).</p>
+<div class="wf" style="font-size:10px;position:relative;margin-top:8px;max-height:220px;overflow:hidden">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span><div class="iqa-search" style="font-size:8px">Search...</div></div>
+<div style="padding:8px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:10px;margin-bottom:6px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body"><p style="font-size:8px">Praise be to Allah. This is an important question...</p><p style="font-size:8px">Most classical jurists hold that women cannot recite...</p></div>
+</div>
+<div class="popover-demo" style="position:absolute;bottom:8px;right:8px;width:170px;margin:0;z-index:3"><h5 data-t="ctx-popover-h" style="font-size:10px">Support IslamQA</h5><p data-t="ctx-popover-p" style="font-size:8px">Answer #48293 helped someone today. You can help us keep going.</p><a class="btn" href="#" data-t="ctx-popover-btn" style="font-size:8px;padding:3px 8px">Contribute</a></div>
+</div>
+<br><p><a href="https://www.nngroup.com/articles/popups/" target="_blank">Scroll-triggered popups less disruptive (NNGroup)</a></p>
+<p style="margin-top:4px"><strong>UX Quality: 7/10 · Revenue: 6/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-impact-title">Impact-Story CTA</span></h4>
+<p data-t="ctx-impact-desc">Dynamic banner using actual answer stats to personalize the donation ask.</p>
+<div class="wf" style="font-size:10px;margin-top:8px;max-height:200px;overflow:hidden">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span><div class="iqa-search" style="font-size:8px">Search...</div></div>
+<div style="padding:8px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:10px;margin-bottom:6px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body"><p style="font-size:8px">Praise be to Allah. This is an important question...</p></div>
+<div style="border-top:1px solid var(--g200);margin:6px 0"></div>
+<div style="background:var(--ad-bg);border:1px solid var(--ad-border);border-radius:6px;padding:8px 10px;font-size:9px;color:var(--ad)"><strong>Answer #48293</strong> helped someone find clarity today.<br><span style="font-weight:700">You can help us keep going →</span></div>
+</div>
+</div>
+<br><p><a href="https://www.nngroup.com/articles/personalization/" target="_blank">Personalized content increases engagement (NNGroup)</a></p>
+<p style="margin-top:4px"><strong>UX Quality: 8/10 · Revenue: 7/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-download-title">Post-Download / Print CTA</span></h4>
+<p data-t="ctx-download-desc">After a user downloads or prints an answer as PDF, show a one-time banner: "This answer reached you for free — help us reach more people."</p>
+<div class="wf" style="font-size:10px;margin-top:8px;max-width:280px">
+<div style="background:var(--iqa);color:#fff;padding:8px 12px;font-size:10px;font-weight:600;display:flex;align-items:center;gap:6px">
+<span style="font-size:14px">✓</span> Download complete — "Can You Read the Quran during Your Period?"
+</div>
+<div style="padding:10px">
+<p style="font-size:9px;color:var(--g500);margin-bottom:8px">Your PDF has been saved successfully.</p>
+<div class="ad-zone az-inline" style="margin:0;min-height:auto;padding:10px;border-style:solid;background:var(--ad-bg)">
+<div style="font-size:10px;font-weight:700;color:var(--ad)">📥 This fatwa reached you free of charge.</div>
+<div style="font-size:9px;color:var(--ad);margin-top:2px">Help us keep Islamic guidance accessible</div>
+<span class="ad-cta" style="background:var(--ad);display:inline-block;margin-top:6px;padding:4px 12px;font-size:9px;border-radius:4px;color:#fff;font-weight:600">Contribute</span>
+</div>
+</div>
+</div>
+<br><p><a href="https://www.nngroup.com/articles/reciprocity-principle/" target="_blank">Post-value reciprocity drives conversion (NNGroup)</a></p>
+<p style="margin-top:4px"><strong>UX Quality: 8/10 · Revenue: 7/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-question-title">Post-Question Submission</span></h4>
+<p data-t="ctx-question-desc">After submitting a question to scholars, show a contribution prompt on the confirmation page: "Your question is being reviewed. Help us keep serving the ummah."</p>
+<div class="wf" style="font-size:10px;margin-top:8px;max-width:280px">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span></div>
+<div style="padding:12px;text-align:center">
+<div style="font-size:24px;margin-bottom:6px">✉️</div>
+<div style="font-size:12px;font-weight:700;color:var(--g800);margin-bottom:4px">Question received</div>
+<p style="font-size:9px;color:var(--g500);margin-bottom:10px">A scholar will review your question soon. You'll be notified by email.</p>
+<div class="ad-zone az-inline" style="margin:0;min-height:auto;padding:10px;border-style:solid;background:var(--ad-bg);text-align:center">
+<div style="font-size:10px;font-weight:700;color:var(--ad)">Support the scholars who answer</div>
+<div style="font-size:9px;color:var(--ad);margin-top:2px">Your question joins 48,000+ answered so far</div>
+<span class="ad-cta" style="background:var(--ad);display:inline-block;margin-top:6px;padding:4px 12px;font-size:9px;border-radius:4px;color:#fff;font-weight:600">Contribute</span>
+</div>
+</div>
+</div>
+<br><p>High-engagement moment — user just invested effort, reciprocity is strongest here.</p>
+<p style="margin-top:4px"><strong>UX Quality: 9/10 · Revenue: 8/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-streak-title">Reading Streak</span></h4>
+<p data-t="ctx-streak-desc">After reading 3+ answers in one session, show a subtle inline message: "You've read 3 answers today — each one is made possible by donors like you."</p>
+<div class="wf" style="font-size:10px;margin-top:8px;max-height:220px;overflow:hidden">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span><div class="iqa-search" style="font-size:8px">Search...</div></div>
+<div style="padding:8px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:10px;margin-bottom:6px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body"><p style="font-size:8px">Praise be to Allah. This is an important question...</p></div>
+<div style="background:var(--ad-bg);border:1px solid var(--ad-border);border-radius:4px;padding:6px 8px;margin:6px 0;font-size:8px;color:var(--ad);display:flex;align-items:center;gap:6px">
+<span style="font-size:11px">📖</span>
+<span><strong>3 answers read today</strong> — Each one costs time, research, and review. <span style="font-weight:700;text-decoration:underline">Help keep this free →</span></span>
+</div>
+<div class="answer-body"><p style="font-size:8px">Most classical jurists hold that women cannot recite Quran during menstruation...</p></div>
+</div>
+</div>
+<br><p>Session-aware personalization — only triggers after demonstrated engagement, avoids ad fatigue.</p>
+<p style="margin-top:4px"><strong>UX Quality: 8/10 · Revenue: 6/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-exit-title">End-of-Session Prompt</span></h4>
+<p data-t="ctx-exit-desc">Exit-intent on back-button or tab-close. "Before you go — this answer was made possible by donors like you."</p>
+<div class="wf" style="font-size:10px;margin-top:8px;height:260px;overflow:hidden;position:relative">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span><div class="iqa-search" style="font-size:8px">Search...</div></div>
+<div style="padding:8px">
+<div class="breadcrumb"><span>Home</span> › <span>Family Fiqh</span></div>
+<div class="q-main-title" style="font-size:10px;margin-bottom:6px">Can You Read the Quran during Your Period?</div>
+<div class="answer-body"><p style="font-size:8px;opacity:.4">Praise be to Allah. This is an important question that concerns many Muslim women. The scholars have differed on this issue...</p>
+<p style="font-size:8px;opacity:.4">Most classical jurists hold that women cannot recite Quran during menstruation...</p></div>
+</div>
+<div style="position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center">
+<div style="background:#fff;border-radius:8px;padding:16px 20px;max-width:230px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.15)">
+<div style="font-size:12px;font-weight:700;color:var(--g800);margin-bottom:4px">Before you go...</div>
+<p style="font-size:9px;color:var(--g500);margin-bottom:10px">This answer was made possible by donors like you.</p>
+<span style="display:inline-block;padding:6px 16px;background:var(--ad);color:#fff;border-radius:5px;font-size:10px;font-weight:700">Contribute</span>
+<div style="font-size:8px;color:var(--g400);margin-top:8px;cursor:pointer">No thanks</div>
+</div>
+</div>
+</div>
+<br><p><a href="https://www.nngroup.com/articles/exit-intent-popups/" target="_blank">Exit-intent catches users who would otherwise leave (NNGroup)</a></p>
+<p style="margin-top:4px"><strong>UX Quality: 5/10 · Revenue: 5/10</strong></p></div>
+<div class="ctx-card"><h4><span style="color:var(--ad)">■</span> <span data-t="ctx-season-title">Seasonal / Ramadan Campaign</span></h4>
+<p data-t="ctx-season-desc">Full-width banner during Ramadan, Dhul Hijjah. Time-limited increases urgency, reduces ad fatigue.</p>
+<div class="wf" style="font-size:10px;margin-top:8px;max-height:200px;overflow:hidden">
+<div class="iqa-nav" style="height:32px;padding:0 8px"><span class="iqa-logo" style="font-size:11px">IslamQA</span><div class="iqa-search" style="font-size:8px">Search...</div></div>
+<div style="background:linear-gradient(135deg,#1a5c3a,#0f9d58);color:#fff;padding:10px 12px;text-align:center">
+<div style="font-size:11px;font-weight:700;margin-bottom:2px">🌙 Ramadan Giving Campaign</div>
+<div style="font-size:8px;opacity:.85;margin-bottom:6px">Help us reach 50,000 answers this Ramadan — 12 days remaining</div>
+<span style="display:inline-block;padding:4px 14px;background:#fff;color:#0f9d58;border-radius:4px;font-size:9px;font-weight:700">Donate Now</span>
+</div>
+<div style="padding:8px">
+<div class="section-title"><span class="bullet"></span>New Answers</div>
+<div class="qa-card"><div class="q-title" style="font-size:9px">If he was offering a supererogatory prayer...</div></div>
+<div class="qa-card"><div class="q-title" style="font-size:9px">She is suffering from addiction...</div></div>
+</div>
+</div>
+<br><p><a href="https://www.nngroup.com/articles/scarcity-urgency/" target="_blank">Time-limited offers create urgency (NNGroup)</a></p>
+<p style="margin-top:4px"><strong>UX Quality: 7/10 · Revenue: 8/10</strong></p></div>
+</div></div>
+
+<!-- ===================== PRIORITY & SPECS ===================== -->
+<div id="page-priority" class="tab-content">
+<div class="card" style="margin-bottom:20px"><div class="card-header"><strong data-t="pri-title">Recommended Implementation Order</strong></div>
+<div style="padding:0">
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('answer','bal','desktop')"><div class="priority-num high">1</div><div class="desc" data-t="pri-1">Answer Page (Desktop) — Top banner + post-answer CTA + sticky sidebar</div><span class="priority-tag bal" data-t="pri-tag-bal">Balanced</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-1">Reading flow fully preserved — no mid-content interruption. Top banner captures first impression, post-answer CTA leverages reciprocity, sidebar provides sustained visibility.</p>
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('search','bal','desktop')"><div class="priority-num high">2</div><div class="desc" data-t="pri-2">Search Page (Desktop) — Single inline after 3rd result + sidebar</div><span class="priority-tag bal">Balanced</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-2">Users see 3 real results before any ad — search stays useful. No top banner keeps search bar prominent.</p>
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('home','bal','desktop')"><div class="priority-num high">3</div><div class="desc" data-t="pri-3">Homepage (Desktop) — Top banner + sidebar</div><span class="priority-tag bal">Balanced</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-3">Homepage is navigational — users tolerate ads here more. Two zones without interrupting content sections.</p>
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('answer','bal','mobile')"><div class="priority-num med">4</div><div class="desc" data-t="pri-4">Answer Page (Mobile) — Post-answer + slim dismissible sticky</div><span class="priority-tag bal">Balanced</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-4">Slim 50px sticky minimizes viewport use. Dismissible respects user choice. Post-answer CTA at natural stopping point.</p>
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('contextual','','')"><div class="priority-num med">5</div><div class="desc" data-t="pri-5">Contextual CTAs — Popover, post-download, post-question</div><span class="priority-tag bal" data-t="pri-tag-ctx">Contextual</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-5">Non-blocking, high-engagement triggers. Post-download and post-question moments have strongest reciprocity — user just received value.</p>
+<a class="priority-item" href="javascript:void(0)" onclick="navigateTo('search','bal','mobile')"><div class="priority-num med">6</div><div class="desc" data-t="pri-6">Search + Homepage (Mobile) — Top banner or single inline</div><span class="priority-tag bal">Balanced</span><span class="arrow">→</span></a>
+<p class="pri-note" data-t="pri-note-6">Mobile users navigate quickly — single ad per page avoids scroll fatigue. Completes full cross-page coverage.</p>
+</div></div>
+<div class="card" style="margin-bottom:20px"><div class="card-header"><strong data-t="spec-title">Suggested Revive Ad Zones</strong></div>
+<div class="card-body"><table class="spec-table"><thead><tr><th data-t="spec-zone">Zone</th><th data-t="spec-dim">Dimensions</th><th data-t="spec-pages">Pages</th><th data-t="spec-pos">Position</th></tr></thead><tbody>
+<tr><td><span class="zone-badge">Zone 1</span></td><td>720 × 90</td><td data-t="spec-p1">Answer, Home, Search</td><td data-t="spec-pos1">Below navbar (desktop)</td></tr>
+<tr><td><span class="zone-badge">Zone 2</span></td><td>336 × 280</td><td>Answer, Home, Search</td><td data-t="spec-pos2">Sidebar</td></tr>
+<tr><td><span class="zone-badge">Zone 3</span></td><td>336 × 280</td><td data-t="spec-p3">Answer</td><td data-t="spec-pos3">Post-answer / mid-content</td></tr>
+<tr><td><span class="zone-badge">Zone 4</span></td><td>320 × 100</td><td>Answer, Home, Search</td><td data-t="spec-pos4">Mobile top / inline</td></tr>
+<tr><td><span class="zone-badge">Zone 5</span></td><td>320 × 50</td><td>Answer</td><td data-t="spec-pos5">Mobile sticky bottom (dismissible)</td></tr>
+<tr><td><span class="zone-badge">Zone 6</span></td><td>720 × 90</td><td data-t="spec-p6">Search</td><td data-t="spec-pos6">Between search results</td></tr>
+<tr><td><span class="zone-badge">Zone 7</span></td><td>Flex</td><td>Answer</td><td data-t="spec-pos7">Bottom-right popover</td></tr>
+<tr><td><span class="zone-badge">Zone 8</span></td><td>Fluid (content-width)</td><td data-t="spec-p8">Answer, Home, Search</td><td data-t="spec-pos8">Native blended card (replaces one banner per page)</td></tr>
+</tbody></table>
+<p style="font-size:11px;color:var(--g500);margin-top:12px" data-t="spec-note">These are suggested new zones. Some may reuse existing Revive zones — see blocker below.</p>
+</div></div>
+<div class="card" style="margin-bottom:20px"><div class="card-header"><strong data-t="template-title">Implementation Spec Sheet</strong></div>
+<div class="card-body">
+<table class="spec-table"><thead><tr><th>Property</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+<tr><td><strong>Dismiss behavior</strong></td><td><code>sessionStorage</code></td><td>Key: <code>dismissed-{zoneId}</code>. Non-redisplay within same session. Resets on new session/tab.</td></tr>
+<tr><td><strong>RTL support</strong></td><td>Full mirroring</td><td>Sidebar flips to right. Ad dismiss button mirrors. CTA alignment mirrors. All text direction via <code>dir="rtl"</code>.</td></tr>
+<tr><td><strong>Accessibility</strong></td><td>WCAG 2.1 AA</td><td>Ad zones: <code>role="complementary"</code> + <code>aria-label</code>. Dismiss button: visible focus ring, <code>aria-label="Dismiss ad"</code>. Contrast ratios meet 4.5:1 minimum.</td></tr>
+<tr><td><strong>Native card</strong></td><td>Fluid width</td><td>Inherits parent container width. Purple border <code>#a78bfa</code>, bg <code>#f5f3ff</code>. Title <code>#5b21b6</code> (7.2:1 contrast). No "Sponsored" label.</td></tr>
+<tr><td><strong>Sticky bottom (mobile)</strong></td><td>320 × 50</td><td>Max 10% viewport. Dismiss persists via sessionStorage. Does not overlay content scroll.</td></tr>
+<tr><td><strong>Question submission</strong></td><td>Never obstructed</td><td>No ad covers "Send a question" link, search bar, or form submit buttons.</td></tr>
+<tr><td><strong>Book/fatwa download</strong></td><td>Never obstructed</td><td>Download/print actions remain accessible. Post-download CTA appears after action completes.</td></tr>
+</tbody></table>
+<h4 style="margin:16px 0 8px;font-size:13px;font-weight:700" data-t="template-html-title">HTML Template — Banner Ad Zone</h4>
+<pre style="background:var(--g100);padding:12px;border-radius:6px;font-size:11px;overflow-x:auto;border:1px solid var(--g200)">&lt;div class="ad-zone az-{position}"
+     role="complementary"
+     aria-label="Contribution banner"
+     data-zone-id="{revive-zone-id}"
+     data-dimensions="{W}x{H}"&gt;
+  &lt;button class="ad-dismiss"
+          aria-label="Dismiss ad"
+          onclick="dismissAd(this)"&gt;×&lt;/button&gt;
+  &lt;!-- Revive async tag or static fallback --&gt;
+&lt;/div&gt;</pre>
+<h4 style="margin:16px 0 8px;font-size:13px;font-weight:700" data-t="template-native-title">HTML Template — Native Blended Card</h4>
+<pre style="background:var(--g100);padding:12px;border-radius:6px;font-size:11px;overflow-x:auto;border:1px solid var(--g200)">&lt;div class="qa-card native-ad"&gt;
+  &lt;div class="q-title"&gt;
+    {Localized CTA copy}
+  &lt;/div&gt;
+  &lt;div class="q-meta"&gt;
+    &lt;a href="/contribute" style="text-decoration:underline"&gt;
+      {Contribute | ساهم}
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div></div>
+<div class="blocker"><h4 data-t="blocker-title">Blocker: Current Revive Zones Unknown</h4><p data-t="blocker-desc">The ticket does not specify which Revive Ad Server zones currently exist. Before implementing, we need a list of existing zone IDs, their dimensions, and where they are currently served. This determines whether we create new zones or reuse existing ones — directly affecting implementation scope and performance tracking accuracy.</p></div>
+</div>
+
+</div>
+
+<script>
+const ar = {
+  'title': 'ICW-815 — خطة توزيع الإعلانات',
+  'subtitle': 'IslamQA.info · بنرات التبرع والمساهمة · توصيات مبنية على دراسات',
+  'tab-answer': 'صفحة الفتوى',
+  'tab-home': 'الرئيسية',
+  'tab-search': 'نتائج البحث',
+  'tab-ctx': 'أفكار إضافية',
+  'tab-pri': 'الأولويات والمواصفات',
+  'biz': 'إعلانات أكثر',
+  'ux': 'تجربة أفضل',
+  'bal': 'نهج متوازن',
+  'desktop': 'سطح المكتب',
+  'mobile': 'الجوال',
+  'ux-q': 'جودة التجربة',
+  'rev': 'العائد المتوقع',
+  'sum-title': 'ملخص المطلوب',
+  'sum-body': 'يحتاج موقع IslamQA إلى بنرات تبرع ومساهمة في مواضع مدروسة عبر ثلاث صفحات رئيسية: الفتوى، والرئيسية، والبحث — بحيث تحقق تبرعات فعلية دون أن تؤثر سلباً على تجربة القراءة. لكل صفحة ثلاثة خيارات: الأعلى عائداً، والأفضل للمستخدم، والمتوازن بينهما. اختر ما يناسب أهدافك.',
+  // Rationale
+  'r-ans-biz-d-title': 'لماذا إعلانات أكثر',
+  'r-ans-biz-d': '<li>٤ مواضع إعلانية (أعلى + وسط المحتوى + بعد الفتوى + شريط جانبي لاصق) = أقصى عدد مشاهدات لكل زيارة</li><li>الإعلان وسط المحتوى يستغل أن <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=74%25%20of%20the%20viewing%20time" target="_blank">٧٤٪ من وقت المشاهدة يُقضى في أول شاشتين (NNGroup)</a></li><li>الشريط الجانبي اللاصق — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=Double%20Viewability" target="_blank">يضاعف نسبة المشاهدة (AdPushup)</a></li><li>المقابل: قطع تدفق القراءة قد يرفع معدل المغادرة</li>',
+  'r-ans-biz-m-title': 'لماذا إعلانات أكثر',
+  'r-ans-biz-m': '<li>٣ مواضع — وسط المحتوى + بعد الفتوى + شريط سفلي دائم</li><li>الشريط السفلي الدائم — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">يرفع نسبة النقر ٤٠-٦٠٪ (AdPushup)</a></li><li>يستهلك ~١٥٪ من شاشة الجوال</li>',
+  'r-ans-ux-d-title': 'لماذا هو الأفضل للمستخدم',
+  'r-ans-ux-d': '<li>بدون أي مقاطعة — الفتوى كاملة من أولها لآخرها، وإعلان واحد فقط بعد النهاية</li><li>الإعلان بعد تقديم الفائدة يستفيد من <a href="https://www.nngroup.com/articles/reciprocity-principle/#:~:text=reciprocity" target="_blank">مبدأ المعاملة بالمثل (NNGroup)</a> — القارئ أخذ ما يريد وأصبح أكثر استعداداً للتفاعل</li><li>لا خطر من تجاهل البنرات — <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=tendency%20to%20ignore%20page%20elements" target="_blank">المستخدمون يتجاهلون ما يشبه الإعلان وسط المحتوى (NNGroup)</a></li><li>الشريط الجانبي ثابت (غير لاصق) — أقل إزعاجاً</li>',
+  'r-ans-ux-m-title': 'لماذا هو الأفضل للمستخدم',
+  'r-ans-ux-m': '<li>إعلان واحد بعد المحتوى — أنظف تجربة قراءة على الجوال</li><li>لا عناصر لاصقة تأكل من الشاشة</li><li><a href="https://www.nngroup.com/articles/ad-placement-study/#:~:text=pleasant" target="_blank">التجربة الإعلانية المريحة تزيد الزيارات المتكررة (NNGroup)</a></li>',
+  'r-ans-bal-d-title': 'لماذا هو متوازن',
+  'r-ans-bal-d': '<li>بنر علوي يظهر فوراً ويختفي بالتمرير — <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=above%20the%20fold" target="_blank">المحتوى فوق الطية يحظى بأعلى انتباه (NNGroup)</a></li><li>لا إعلانات وسط المحتوى — تدفق القراءة محفوظ بالكامل</li><li>إعلان بعد الفتوى عند نقطة المعاملة بالمثل + شريط جانبي لاصق للظهور المستمر</li><li>مواضع أقل = <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=Do%20not%20mix%20content%20and%20ads" target="_blank">إرهاق إعلاني أقل (NNGroup)</a></li>',
+  'r-ans-bal-m-title': 'لماذا هو متوازن',
+  'r-ans-bal-m': '<li>إعلان بعد الفتوى عند نقطة المعاملة بالمثل</li><li>شريط سفلي رفيع (٥٠ بكسل) — حد أدنى من الشاشة — <a href="https://web.dev/articles/cls#:~:text=layout%20shift" target="_blank">إزاحة أقل = تجربة أفضل (web.dev)</a></li><li>قابل للإغلاق — يُحفظ في الجلسة</li>',
+  'r-home-biz-d-title': 'لماذا إعلانات أكثر',
+  'r-home-biz-d': '<li>٤ مواضع — بنر رئيسي + ٢ بين الأقسام + شريط جانبي لاصق</li><li>البنر الرئيسي يلتقط النظرة الأولى — <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/#:~:text=horizontal%20movement" target="_blank">أول حركة أفقية للعين (NNGroup)</a></li><li>الرئيسية صفحة تنقّل — المستخدم لا يقرأ بعمق، فتقبّله للإعلانات أعلى</li>',
+  'r-home-biz-m-title': 'لماذا إعلانات أكثر',
+  'r-home-biz-m': '<li>٣ مواضع + شريط سفلي دائم — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">يرفع نسبة النقر ٤٠-٦٠٪ (AdPushup)</a></li>',
+  'r-home-ux-d-title': 'لماذا هو الأفضل للمستخدم',
+  'r-home-ux-d': '<li>إعلان واحد في الشريط الجانبي فقط — منطقة المحتوى خالية تماماً</li><li>الرئيسية النظيفة تمنع — <a href="https://www.nngroup.com/articles/homepage-real-estate-allocation/#:~:text=clutter" target="_blank">الفوضى تجعل المستخدم يفوّت المحتوى المهم (NNGroup)</a></li>',
+  'r-home-bal-d-title': 'لماذا هو متوازن',
+  'r-home-bal-d': '<li>بنر علوي + شريط جانبي = موضعان فقط، بدون قطع للمحتوى</li><li>لا إعلانات بين الأقسام — التنقل طبيعي</li>',
+  'r-srch-biz-d-title': 'لماذا إعلانات أكثر',
+  'r-srch-biz-d': '<li>٤ مواضع — أعلى + ٢ بين النتائج + شريط جانبي لاصق</li><li>الإعلانات بين النتائج تحاكي نمط Google — <a href="https://www.nngroup.com/articles/search-ads-vs-organic/#:~:text=sponsored" target="_blank">المواضع ٢-٤ تحصل على أعلى نقرات (NNGroup)</a></li><li>المقابل: الكثافة العالية قد تزعج المستخدمين المتكررين</li>',
+  'r-srch-ux-d-title': 'لماذا هو الأفضل للمستخدم',
+  'r-srch-ux-d': '<li>قائمة النتائج نظيفة تماماً — لا قطع أثناء التصفح</li><li>الإعلان بعد كل النتائج — أغلب المستخدمين ينقرون على نتيجة قبل الوصول إليه</li><li>البحث شريان حياة — <a href="https://www.nngroup.com/articles/search-visible-and-simple/#:~:text=search" target="_blank">لا تعرقله (NNGroup)</a></li>',
+  'r-srch-bal-d-title': 'لماذا هو متوازن',
+  'r-srch-bal-d': '<li>إعلان واحد بعد النتيجة الثالثة — المستخدم يرى ٣ نتائج حقيقية أولاً</li><li>لا بنر علوي — شريط البحث يبقى بارزاً</li><li>الشريط الجانبي يوفر ظهوراً ثانوياً هادئاً</li>',
+  // Contextual
+  'ctx-label': 'أفكار إضافية للمواضع',
+  'ctx-popover-title': 'نافذة منبثقة (أسفل اليمين)',
+  'ctx-popover-desc': 'تنزلق بهدوء بعد ٣٠ ثانية أو عند تمرير ٦٠٪ من الصفحة. قابلة للإغلاق، تُعرض مرة واحدة في الجلسة.',
+  'ctx-popover-h': 'ادعم الإسلام سؤال وجواب',
+  'ctx-popover-p': 'الفتوى رقم ٤٨٢٩٣ ساعدت شخصاً اليوم. ساعدنا نستمر.',
+  'ctx-popover-btn': 'ساهم',
+  'ctx-impact-title': 'دعوة بقصة أثر',
+  'ctx-impact-desc': 'بنر ديناميكي يستخدم إحصائيات الفتاوى الفعلية لتخصيص طلب التبرع.',
+  'ctx-download-title': 'دعوة بعد التحميل أو الطباعة',
+  'ctx-download-desc': 'بعد تحميل أو طباعة الفتوى كملف PDF، يظهر بنر لمرة واحدة: «هذه الفتوى وصلتك مجاناً — ساعدنا نوصلها لغيرك.»',
+  'ctx-question-title': 'دعوة بعد إرسال السؤال',
+  'ctx-question-desc': 'بعد إرسال سؤال للعلماء، يظهر طلب مساهمة في صفحة التأكيد: «سؤالك قيد المراجعة. ادعم العلماء الذين يجيبون.»',
+  'ctx-streak-title': 'بعد قراءة عدة فتاوى',
+  'ctx-streak-desc': 'بعد قراءة ٣ فتاوى أو أكثر في جلسة واحدة، يظهر تنبيه: «قرأت ٣ فتاوى اليوم — كل فتوى تحتاج بحثاً ومراجعة. ساعدنا نستمر.»',
+  'ctx-exit-title': 'رسالة قبل المغادرة',
+  'ctx-exit-desc': 'تظهر عند نية الرجوع أو إغلاق التبويب. «قبل ما تمشي — هذه الفتوى وصلتك بفضل متبرعين مثلك.»',
+  'ctx-season-title': 'حملة موسمية (رمضان / ذو الحجة)',
+  'ctx-season-desc': 'بنر بعرض الصفحة خلال فترات الذروة. التحديد بوقت يزيد الإلحاح ويقلل إرهاق الإعلانات.',
+  // Priority
+  'pri-title': 'ترتيب التنفيذ المقترح',
+  'pri-1': 'صفحة الفتوى (سطح المكتب) — بنر علوي + إعلان بعد الإجابة + شريط جانبي لاصق',
+  'pri-note-1': 'تدفق القراءة محفوظ بالكامل — لا مقاطعة وسط المحتوى. البنر العلوي يلتقط الانطباع الأول، وإعلان ما بعد الفتوى يستفيد من مبدأ المعاملة بالمثل، والشريط الجانبي يوفر ظهوراً مستمراً.',
+  'pri-2': 'صفحة البحث (سطح المكتب) — إعلان بعد النتيجة الثالثة + شريط جانبي',
+  'pri-note-2': 'المستخدم يرى ٣ نتائج حقيقية قبل أي إعلان — البحث يبقى مفيداً. لا بنر علوي يحافظ على بروز شريط البحث.',
+  'pri-3': 'الرئيسية (سطح المكتب) — بنر علوي + شريط جانبي',
+  'pri-note-3': 'الرئيسية صفحة تنقّل — المستخدمون يتقبلون الإعلانات فيها أكثر. موضعان فقط بدون قطع لأقسام المحتوى.',
+  'pri-4': 'صفحة الفتوى (الجوال) — إعلان بعد الإجابة + شريط سفلي رفيع قابل للإغلاق',
+  'pri-note-4': 'شريط رفيع ٥٠ بكسل يستهلك أقل مساحة ممكنة. قابل للإغلاق يحترم اختيار المستخدم. إعلان ما بعد الفتوى في نقطة توقف طبيعية.',
+  'pri-5': 'دعوات سياقية — نافذة منبثقة، بعد التحميل، بعد إرسال السؤال',
+  'pri-note-5': 'غير مزعجة، تعتمد على لحظات التفاعل العالي. بعد التحميل وبعد إرسال السؤال أقوى لحظات المعاملة بالمثل — المستخدم تلقّى الفائدة للتو.',
+  'pri-6': 'البحث والرئيسية (الجوال) — بنر علوي أو إعلان واحد ضمن المحتوى',
+  'pri-note-6': 'مستخدمو الجوال ينتقلون بسرعة — إعلان واحد لكل صفحة يجنّب إرهاق التمرير. يكمّل تغطية الجوال مع صفحة الفتوى.',
+  'pri-tag-bal': 'متوازن',
+  'pri-tag-ctx': 'سياقي',
+  // Specs
+  'spec-title': 'مناطق Revive المقترحة',
+  'spec-zone': 'المنطقة',
+  'spec-dim': 'الأبعاد',
+  'spec-pages': 'الصفحات',
+  'spec-pos': 'الموضع',
+  'spec-note': 'هذه مناطق جديدة مقترحة. بعضها قد يُعاد استخدامه من مناطق Revive الحالية — انظر العائق أدناه.',
+  'spec-p1': 'الفتوى، الرئيسية، البحث',
+  'spec-pos1': 'أسفل شريط التنقل (سطح المكتب)',
+  'spec-pos2': 'الشريط الجانبي',
+  'spec-p3': 'الفتوى',
+  'spec-pos3': 'بعد الفتوى / وسط المحتوى',
+  'spec-pos4': 'أعلى الجوال / ضمن المحتوى',
+  'spec-pos5': 'شريط سفلي لاصق للجوال (قابل للإغلاق)',
+  'spec-p6': 'البحث',
+  'spec-pos6': 'بين نتائج البحث',
+  'spec-pos7': 'نافذة منبثقة (أسفل اليمين)',
+  'spec-p8': 'الفتوى، الرئيسية، البحث',
+  'spec-pos8': 'بطاقة مدمجة (تحل محل بنر واحد في كل صفحة)',
+  'template-title': 'مواصفات التنفيذ',
+  'template-html-title': 'قالب HTML — منطقة إعلان بنر',
+  'template-native-title': 'قالب HTML — بطاقة مدمجة',
+  // Blocker
+  'blocker-title': 'عائق: مناطق Revive الحالية غير معروفة',
+  'blocker-desc': 'لا تحدد التذكرة مناطق خادم Revive الموجودة حالياً. قبل التنفيذ، نحتاج قائمة بمعرّفات المناطق الحالية وأبعادها وأماكن عرضها. هذا يحدد هل ننشئ مناطق جديدة أم نعيد تعيين الموجودة — مما يؤثر مباشرة على حجم العمل ودقة تتبع الأداء.',
+  'no-ads-mobile': 'لا إعلانات على الرئيسية في الجوال — المستخدمون ينتقلون بسرعة، العائد ضعيف جداً.',
+};
+
+const originals = {};
+
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.lang-btn[onclick*="'+lang+'"]').classList.add('active');
+
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (lang === 'ar' && ar[key]) {
+      if (!originals[key]) originals[key] = el.innerHTML;
+      el.innerHTML = ar[key];
+    } else if (lang === 'en' && originals[key]) {
+      el.innerHTML = originals[key];
+    }
+  });
+  translateWireframes(lang);
+  renderAds();
+}
+
+function showPage(p){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.page-tab').forEach(e=>e.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');const m={answer:0,home:1,search:2,contextual:3,priority:4},tabs=document.querySelectorAll('.page-tab');if(m[p]!==undefined&&tabs[m[p]])tabs[m[p]].classList.add('active')}
+function showOpt(pg,opt){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.opt-tab').forEach(e=>e.classList.remove('active'));const p=document.getElementById(pg+'-'+opt);if(p){p.classList.add('active');const ap=c.querySelector('.plat-tab.active'),pk=ap&&ap.textContent.trim().toLowerCase()==='mobile'||ap&&ap.textContent.trim()==='الجوال'?'mobile':'desktop',sp=document.getElementById(pg+'-'+opt+'-'+pk);if(sp)sp.classList.add('active')}c.querySelectorAll('.opt-tab.'+opt).forEach(e=>e.classList.add('active'))}
+function showPlat(pg,pl){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.plat-tab').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.plat-tab').forEach(e=>{const t=e.textContent.trim().toLowerCase();if(t===pl||t==='الجوال'&&pl==='mobile'||t==='سطح المكتب'&&pl==='desktop')e.classList.add('active')});const ao=c.querySelector('.opt-tab.active');let ok='biz';if(ao){if(ao.classList.contains('ux'))ok='ux';else if(ao.classList.contains('bal'))ok='bal'}const op=document.getElementById(pg+'-'+ok);if(op){op.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));const t=document.getElementById(pg+'-'+ok+'-'+pl);if(t)t.classList.add('active')}}
+function navigateTo(pg,opt,pl){showPage(pg);if(pg==='contextual'||pg==='priority')return;setTimeout(()=>{if(opt)showOpt(pg,opt);setTimeout(()=>{if(pl)showPlat(pg,pl);const c=document.getElementById('page-'+pg).querySelector('.card');if(c)c.scrollIntoView({behavior:'smooth',block:'start'})},50)},50)}
+
+// Auto-wire data-t on rationale blocks based on parent panel ID
+document.querySelectorAll('.option-panel[id]').forEach(panel => {
+  const id = panel.id;
+  const rat = panel.querySelector('.rationale');
+  if (!rat) return;
+  const parts = id.split('-');
+  if (parts.length < 3) return;
+  let key = 'r-';
+  if (parts[0]==='answer') key+='ans-';
+  else if (parts[0]==='home') key+='home-';
+  else if (parts[0]==='search') key+='srch-';
+  else return;
+  key += parts[1]+'-'+parts[2].charAt(0);
+  const h4 = rat.querySelector('h4');
+  const ul = rat.querySelector('ol') || rat.querySelector('ul');
+  if (h4) {
+    const dot = h4.querySelector('span[style]');
+    if (dot) {
+      const txt = h4.innerHTML.replace(dot.outerHTML,'').trim();
+      const w = document.createElement('span');
+      w.setAttribute('data-t', key+'-title');
+      w.innerHTML = txt;
+      h4.innerHTML = '';
+      h4.appendChild(dot);
+      h4.appendChild(document.createTextNode(' '));
+      h4.appendChild(w);
+    } else {
+      h4.setAttribute('data-t', key+'-title');
+    }
+  }
+  if (ul) ul.setAttribute('data-t', key);
+});
+
+// Translate wireframe site content to Arabic MSA
+function translateWireframes(lang){
+  var m={
+    'IslamQA':'الإسلام سؤال وجواب',
+    'Search for a question or fatwa...':'ابحث عن سؤال أو فتوى...',
+    'Search...':'ابحث...',
+    'Contribute':'ساهم',
+    'English ▾':'العربية ▾',
+    'My account':'حسابي',
+    'New Answers':'إجابات جديدة',
+    'Category tree':'شجرة التصنيفات',
+    'Essential Answers':'أهم الإجابات',
+    'Articles':'مقالات',
+    'Books':'كتب',
+    'Send a question':'أرسل سؤالاً',
+    'Home':'الرئيسية',
+    'Family Fiqh':'فقه الأسرة',
+    'Menstruation & Post-Natal Bleeding':'الحيض والنفاس',
+    'Can You Read the Quran during Your Period?':'هل يجوز للحائض قراءة القرآن؟',
+    'Sheikh Muhammed Salih Al-Munajjid':'الشيخ محمد صالح المنجد',
+    'The Majority View (Prohibition)':'رأي الجمهور (المنع)',
+    'The Minority View (Permissibility)':'رأي آخر (الجواز)',
+    'The Majority View':'رأي الجمهور',
+    'The Minority View':'رأي آخر',
+    'Related Questions':'أسئلة ذات صلة',
+    'Is Divorce Valid during Menstruation?':'هل يقع الطلاق في الحيض؟',
+    'Sunan al-fitrah during menses':'سنن الفطرة أثناء الحيض',
+    'If the menses lasts longer than usual':'إذا زاد الحيض عن عادته',
+    'Categories':'التصنيفات',
+    'Menstruation':'الحيض',
+    'Quran Sciences':'علوم القرآن',
+    'Basic Tenets':'أصول الإيمان',
+    'Basic Tenets (131)':'أصول الإيمان (١٣١)',
+    'Hadith':'الحديث',
+    'Hadith (76)':'الحديث (٧٦)',
+    'Family Fiqh (113)':'فقه الأسرة (١١٣)',
+    'Quran':'القرآن',
+    'Quran (134)':'القرآن (١٣٤)',
+    'Fiqh':'الفقه',
+    'Most Read Answers':'أكثر الإجابات قراءة',
+    'Most Read':'الأكثر قراءة',
+    'More ›':'المزيد ‹',
+    'If he was offering a supererogatory prayer and the iqamah...':'إذا كان يصلي نافلة وأُقيمت الصلاة...',
+    'If he was offering a supererogatory prayer...':'إذا كان يصلي نافلة وأُقيمت...',
+    'She is suffering from addiction to the secret habit...':'تعاني من إدمان العادة السرية...',
+    'She is suffering from addiction...':'تعاني من إدمان العادة السرية...',
+    'Is the Angel of Death one angel or many?':'هل ملك الموت واحد أم متعدد؟',
+    'Is Masturbation Haram in Islam?':'هل الاستمناء حرام في الإسلام؟',
+    'Is Music Haram?':'هل الموسيقى حرام؟',
+    'How to Make Ghusl for Major Impurity':'كيفية الغسل من الجنابة',
+    'What Are the Virtues of Muharram?':'ما فضائل شهر محرم؟',
+    'Fasting on Ashura: Complete Guide':'صيام عاشوراء: دليل شامل',
+    'Ruling on reading Quran without wudu':'حكم قراءة القرآن بدون وضوء',
+    '70 Matters Related to Fasting':'سبعون مسألة في الصيام',
+    'Disallowed Matters':'المحرمات',
+    'How is the prostration of forgetfulness done in prayer?':'كيف يكون سجود السهو في الصلاة؟',
+    'How is the prostration of forgetfulness done?':'كيف يكون سجود السهو؟',
+    'The times of the five daily prayers':'مواقيت الصلوات الخمس',
+    'Can you combine prayers when travelling?':'هل يجوز الجمع بين الصلوات في السفر؟',
+    'Can you combine prayers?':'هل يجوز الجمع بين الصلوات؟',
+    'Making up missed prayers':'قضاء الصلوات الفائتة',
+    'Is it permissible to pray in English?':'هل يجوز الصلاة بالإنجليزية؟',
+    'Praying behind an imam who makes mistakes':'الصلاة خلف إمام يخطئ',
+    "How many rak'ahs in Taraweeh?":'كم ركعة في التراويح؟',
+    'prayer times':'مواقيت الصلاة',
+    'All':'الكل',
+    'Answers':'الإجابات',
+    '© Islam Q&A 1997-2025 · About · Privacy Policy':'© الإسلام سؤال وجواب ١٩٩٧-٢٠٢٥ · عن الموقع · سياسة الخصوصية',
+    '2.9M':'٢٫٩ م','1.8M':'١٫٨ م','1.2M':'١٫٢ م',
+    'Family Fiqh · 1.2M views':'فقه الأسرة · ١٫٢ مليون مشاهدة',
+    'Fiqh · 890K views':'الفقه · ٨٩٠ ألف مشاهدة',
+    'Fiqh · 650K views':'الفقه · ٦٥٠ ألف مشاهدة',
+    'Fiqh · 520K views':'الفقه · ٥٢٠ ألف مشاهدة',
+    'Basic Tenets · 410K views':'أصول الإيمان · ٤١٠ ألف مشاهدة',
+    'Fiqh · 280K views':'الفقه · ٢٨٠ ألف مشاهدة',
+    'Fiqh · 190K views':'الفقه · ١٩٠ ألف مشاهدة',
+    'Your question could be next — contribute to the scholars who answer':'سؤالك قد يكون التالي — ساهم في دعم العلماء الذين يجيبون',
+    'Contribute':'ساهم',
+    'Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.':'كل إجابة في الإسلام سؤال وجواب تُبحث وتُراجع من علماء مؤهلين. مساهمتك تبقي هذه الخدمة مجانية للملايين.',
+    'Your contribution keeps this service free for millions.':'مساهمتك تبقي هذه الخدمة مجانية للملايين.'
+  };
+  // Prefix-match: answer body paragraphs
+  var pMap=[
+    ['Praise be to Allah. This is an important question that concerns','الحمد لله. هذا سؤال مهم يشغل كثيراً من المسلمات. اختلف العلماء في هذه المسألة...'],
+    ['Praise be to Allah. This is an important question','الحمد لله. هذا سؤال مهم يشغل كثيراً من المسلمات...'],
+    ['Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity. Limited','يرى جمهور الفقهاء أن المرأة لا تقرأ القرآن أثناء الحيض حتى تطهر. واستُثنيت بعض العبارات القصيرة...'],
+    ['Most classical jurists hold that women cannot recite Quran','يرى جمهور الفقهاء أن المرأة لا تقرأ القرآن أثناء الحيض حتى تطهر...'],
+    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed, reasoning that no clear evidence explicitly forbids it and that preventing','يرى بعض العلماء ومنهم مالك وابن تيمية جواز القراءة، إذ لا دليل صريح على المنع ومنعها يحرم المرأة من الأجر.'],
+    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed','يرى بعض العلماء ومنهم مالك وابن تيمية جواز القراءة...'],
+    ['Some scholars argue recitation is allowed','يرى بعض العلماء جواز القراءة...'],
+    ['While reciting from memory may be permissible','وإن كانت القراءة من الحفظ قد تجوز عند بعضهم، فإن مسّ المصحف محرّم في حال الحدث.'],
+    ['And Allah knows best','والله أعلم.']
+  ];
+  // Prefix-match: search result snippets
+  var sMap=[
+    ['The prostration of forgetfulness is prescribed for three reasons','سجود السهو مشروع لثلاثة أسباب: الزيادة والنقص والشك...'],
+    ['The prostration of forgetfulness is prescribed','سجود السهو مشروع لثلاثة أسباب...'],
+    ['The prostration of forgetfulness','سجود السهو مشروع...'],
+    ['Praise be to Allah. The times of the prayers were mentioned','الحمد لله. بيّن النبي ﷺ مواقيت الصلاة في الحديث...'],
+    ['Praise be to Allah. The times','الحمد لله. بيّن النبي ﷺ مواقيت الصلاة...'],
+    ['It is permissible to combine Zuhr','يجوز الجمع بين الظهر والعصر والمغرب والعشاء عند السفر...'],
+    ['It is permissible to combine','يجوز الجمع بين الصلوات...'],
+    ['The scholars differed regarding the one who deliberately','اختلف العلماء فيمن ترك الصلاة عمداً تكاسلاً...'],
+    ['The scholars differed regarding','اختلف العلماء فيمن ترك الصلاة...'],
+    ['It is not permissible to pray in any language other than Arabic','لا يجوز أداء الصلاة بغير العربية لمن يستطيع تعلمها...'],
+    ['It is not permissible','لا يجوز الصلاة بغير العربية...'],
+    ['If the imam makes a mistake','إذا أخطأ الإمام في قراءة الفاتحة...'],
+    ['The scholars differed concerning the number','اختلف العلماء في عدد ركعات التراويح...'],
+    ['The scholars differed concerning','اختلف العلماء في عدد ركعات التراويح...'],
+    ['The scholars differed','اختلف العلماء...']
+  ];
+  // Helpers
+  function tx(el){
+    var k=el.textContent.trim();
+    if(lang==='ar'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=el.textContent;el.textContent=m[k]}}
+    else if(el.dataset.wo){el.textContent=el.dataset.wo;delete el.dataset.wo}
+  }
+  function tn(el){
+    var nodes=[].slice.call(el.childNodes);
+    for(var i=nodes.length-1;i>=0;i--){
+      if(nodes[i].nodeType===3&&nodes[i].textContent.trim()){
+        var k=nodes[i].textContent.trim();
+        if(lang==='ar'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=nodes[i].textContent;nodes[i].textContent=m[k]}}
+        else if(el.dataset.wo){nodes[i].textContent=el.dataset.wo;delete el.dataset.wo}
+        return;
+      }
+    }
+  }
+  function pf(el,map){
+    if(lang==='ar'){
+      if(el.dataset.wo)return;var t=el.textContent.trim();
+      for(var i=0;i<map.length;i++){if(t.indexOf(map[i][0])===0){el.dataset.wo=el.textContent;el.textContent=map[i][1];return}}
+    }else if(el.dataset.wo){el.textContent=el.dataset.wo;delete el.dataset.wo}
+  }
+  // A: Simple text elements
+  document.querySelectorAll('.iqa-logo,.iqa-contribute,.iqa-lang,.q-main-title,.scholar,.ah,.wt,.wi,.cat-tag,.mr-title,.more-link,.sr-title,.sr-meta,.search-tab,.iqa-footer,.q-title,.mr-views,.iqa-search').forEach(tx);
+  // B: Text nodes after icon/bullet spans
+  document.querySelectorAll('.si').forEach(tn);
+  document.querySelectorAll('.section-title').forEach(tn);
+  // C: Search input values
+  document.querySelectorAll('.search-input').forEach(function(el){
+    if(lang==='ar'){if(el.dataset.wo)return;var k=el.value.trim();if(m[k]){el.dataset.wo=el.value;el.value=m[k]}}
+    else if(el.dataset.wo){el.value=el.dataset.wo;delete el.dataset.wo}
+  });
+  // D: Breadcrumbs (innerHTML replacement)
+  document.querySelectorAll('.breadcrumb').forEach(function(el){
+    if(lang==='ar'){
+      if(el.dataset.wo)return;el.dataset.wo=el.innerHTML;
+      var h=el.innerHTML;
+      h=h.replace(/>Home</g,'>الرئيسية<');
+      h=h.replace(/>Family Fiqh</g,'>فقه الأسرة<');
+      h=h.replace(/Menstruation &amp; Post-Natal Bleeding/g,'الحيض والنفاس');
+      h=h.replace(/Menstruation & Post-Natal Bleeding/g,'الحيض والنفاس');
+      el.innerHTML=h;
+    }else if(el.dataset.wo){el.innerHTML=el.dataset.wo;delete el.dataset.wo}
+  });
+  // E: Answer body paragraphs (prefix match)
+  document.querySelectorAll('.answer-body > p').forEach(function(el){pf(el,pMap)});
+  // F: Search result snippets (prefix match)
+  document.querySelectorAll('.sr-snip').forEach(function(el){pf(el,sMap)});
+  // G: Contextual ad mockup boxes
+  document.querySelectorAll('.ctx-card > div[style]').forEach(function(el){
+    if(lang==='ar'){
+      if(el.dataset.wo)return;el.dataset.wo=el.innerHTML;
+      var h=el.innerHTML;
+      h=h.replace('Answer #48293','الفتوى رقم ٤٨٢٩٣');
+      h=h.replace('helped someone find clarity today.','ساعدت شخصاً اليوم.');
+      h=h.replace('You can help us keep going →','ساعدنا نستمر ←');
+      h=h.replace('📥 Download complete','📥 اكتمل التحميل');
+      h=h.replace('This fatwa reached you free of charge.','هذه الفتوى وصلتك مجاناً.');
+      h=h.replace('Help us keep Islamic guidance accessible →','ساعدنا نوصل الإرشاد الشرعي للجميع ←');
+      h=h.replace('✉️ Question submitted','✉️ تم إرسال السؤال');
+      h=h.replace('A scholar will review your question soon.','سيراجع عالم سؤالك قريباً.');
+      h=h.replace('Support the scholars who answer →','ادعم العلماء الذين يجيبون ←');
+      h=h.replace('📖 3 answers read today','📖 قرأت ٣ فتاوى اليوم');
+      h=h.replace('Each answer costs time, research, and review.','كل فتوى تحتاج وقتاً وبحثاً ومراجعة.');
+      h=h.replace('Help keep this knowledge free →','ساعد في إبقاء هذا العلم مجاناً ←');
+      el.innerHTML=h;
+    }else if(el.dataset.wo){el.innerHTML=el.dataset.wo;delete el.dataset.wo}
+  });
+}
+
+// Realistic ad banners — copy from actual IslamQA campaigns
+var adCopy=[
+  {en:'Answer no. 12376 taught someone how to invite to Islam.',ar:'الفتوى رقم ١٢٣٧٦ علّمت شخصاً كيف يدعو إلى الإسلام.'},
+  {en:'It takes resources to make an answer as easy as clicking a button.',ar:'إعداد الإجابة يحتاج موارد بقدر سهولة الضغط على زر.'},
+  {en:'Answer no. 170649 refuted arguments against the Quran.',ar:'الفتوى رقم ١٧٠٦٤٩ ردّت على شبهات حول القرآن.'},
+  {en:'As long as people need answers, we need your contributions.',ar:'ما دام الناس يسألون، فنحن بحاجة لمساهماتكم.'},
+  {en:'Answer no. 98682 helped someone to start praying again.',ar:'الفتوى رقم ٩٨٦٨٢ ساعدت شخصاً على العودة للصلاة.'},
+  {en:'Questions require answers, and answers require contributions.',ar:'الأسئلة تحتاج إجابات، والإجابات تحتاج مساهماتكم.'},
+  {en:'Answer no. 107701 taught someone the conditions for prayer.',ar:'الفتوى رقم ١٠٧٧٠١ علّمت شخصاً شروط الصلاة.'},
+  {en:'Answer no. 110845 saved a marriage.',ar:'الفتوى رقم ١١٠٨٤٥ أنقذت زواجاً.'},
+  {en:'Answer no. 3100 led a woman to Islam.',ar:'الفتوى رقم ٣١٠٠ قادت امرأة إلى الإسلام.'}
+];
+var adColors=[
+  {bg:'#e8eef4',text:'#1a3a5c',btn:'#b87333'},
+  {bg:'#f0ebe4',text:'#3a3020',btn:'#b87333'},
+  {bg:'#4a7fb5',text:'#ffffff',btn:'#c89030'},
+  {bg:'#e8e8e8',text:'#2a2a2a',btn:'#b87333'},
+  {bg:'#f0f0f0',text:'#2a2a2a',btn:'#b87333'},
+  {bg:'#1a2a3c',text:'#e8c060',btn:'#c89030'},
+  {bg:'#f5e0e0',text:'#8b2020',btn:'#b87333'},
+  {bg:'#1e2d3d',text:'#ffffff',btn:'#4a7fb5'}
+];
+
+function assignAds(){
+  var zones=[].slice.call(document.querySelectorAll('.ad-zone:not(.ctx-card .ad-zone)'));
+  var pool=[];
+  for(var i=0;i<zones.length;i++) pool.push(i%adCopy.length);
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t}
+  var cPool=[];
+  for(var i=0;i<zones.length;i++) cPool.push(i%adColors.length);
+  for(var i=cPool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=cPool[i];cPool[i]=cPool[j];cPool[j]=t}
+  zones.forEach(function(z,idx){
+    var dims=(z.textContent.match(/\d+\s*[×x]\s*\d+/)||[''])[0].replace(/\s/g,'');
+    z.dataset.adI=pool[idx];
+    z.dataset.adC=cPool[idx];
+    z.dataset.adDim=dims;
+  });
+  renderAds();
+}
+
+function renderAds(){
+  var lang=document.documentElement.lang||'en';
+  var sec=lang==='ar'?'نعم، مساهمتك تصنع الفرق.':'Yes, your contribution makes a difference.';
+  var btn=lang==='ar'?'ساهم 🤲':'Contribute 🤲';
+  var dismissLabel=lang==='ar'?'إغلاق الإعلان':'Dismiss ad';
+  var circled=['','❶','❷','❸','❹','❺','❻','❼','❽'];
+  var panelMap=new Map();
+  [].slice.call(document.querySelectorAll('.ad-zone[data-ad-i]')).forEach(function(z){
+    var panel=z.closest('.option-panel[id]');
+    var key=panel?panel.id:'_root';
+    if(!panelMap.has(key))panelMap.set(key,[]);
+    panelMap.get(key).push(z);
+  });
+  panelMap.forEach(function(zones){
+    zones.forEach(function(z,idx){
+      var ad=adCopy[z.dataset.adI];
+      var col=adColors[z.dataset.adC];
+      var primary=lang==='ar'?ad.ar:ad.en;
+      var num=idx+1;
+      z.classList.add('has-ad');
+      z.setAttribute('role','complementary');
+      z.setAttribute('aria-label','Advertisement zone '+num);
+      z.style.background=col.bg;
+      var adId=z.closest('.option-panel[id]')?(z.closest('.option-panel[id]').id+'-ad-'+num):'ad-'+num;
+      z.dataset.adId=adId;
+      var dismissed=sessionStorage.getItem('dismissed-'+adId);
+      if(dismissed){z.style.display='none';return}
+      z.innerHTML='<button class="ad-dismiss" aria-label="'+dismissLabel+'" onclick="dismissAd(this)" title="'+dismissLabel+'">×</button>'+
+        '<div class="ad-banner"><div class="ad-text">'+
+        '<div class="ad-primary" style="color:'+col.text+'">'+primary+'<span class="ad-ref" style="color:'+col.text+'">('+num+')</span></div>'+
+        '<div class="ad-secondary" style="color:'+col.text+'">'+sec+'</div>'+
+        '</div><span class="ad-cta" style="background:'+col.btn+'">'+btn+'</span></div>';
+    });
+  });
+}
+function dismissAd(btn){
+  var zone=btn.closest('.ad-zone');
+  if(!zone)return;
+  var adId=zone.dataset.adId;
+  if(adId)sessionStorage.setItem('dismissed-'+adId,'1');
+  zone.style.display='none';
+}
+
+assignAds();
+</script>
+</body></html>
