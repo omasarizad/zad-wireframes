@@ -16,7 +16,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;color:var(--g800);background:var(--g100);line-height:1.5;-webkit-font-smoothing:antialiased}
-html[lang="ar"] body{font-family:'Noto Sans Arabic','Inter',sans-serif}
+html[lang="fa"] body{font-family:'Noto Sans Arabic','Inter',sans-serif}
 .page-header{background:linear-gradient(135deg,var(--g900),var(--g700));color:#fff;padding:32px 0 0}
 .page-header h1{font-size:22px;font-weight:800}
 .page-header .sub{font-size:13px;color:var(--g400);margin-top:4px}
@@ -125,8 +125,8 @@ html[lang="ar"] body{font-family:'Noto Sans Arabic','Inter',sans-serif}
 .ad-banner .ad-secondary{font-size:9px;opacity:.65;line-height:1.3}
 .ad-banner .ad-cta{padding:5px 14px;border-radius:5px;font-size:10px;font-weight:700;white-space:nowrap;color:#fff;flex-shrink:0;letter-spacing:.2px}
 .ad-zone-tag{position:absolute;top:2px;right:2px;font-size:6px;padding:1px 4px;border-radius:2px;background:rgba(0,0,0,.15);color:rgba(255,255,255,.75);pointer-events:none;z-index:1;font-weight:400}
-html[lang="ar"] .ad-zone-tag{right:auto;left:2px}
-html[lang="ar"] .ad-zone.has-ad{text-align:right}
+html[lang="fa"] .ad-zone-tag{right:auto;left:2px}
+html[lang="fa"] .ad-zone.has-ad{text-align:right}
 .has-ad.az-sidebar .ad-banner{flex-direction:column;align-items:flex-start;padding:10px 12px;height:100%}
 .has-ad.az-sidebar .ad-primary{font-size:12px;margin-bottom:2px}
 .has-ad.az-sidebar .ad-secondary{margin-bottom:auto;font-size:8px}
@@ -185,9 +185,10 @@ html[lang="ar"] .ad-zone.has-ad{text-align:right}
 .native-ad .sr-title{color:#5b21b6!important;font-weight:700!important}
 .native-ad .sr-snip{color:#6d28d9!important;opacity:.85}
 .native-ad .sr-meta{color:#7c3aed!important}
+.native-cta{text-decoration:underline;cursor:pointer}
 .native-ad-footnote{font-size:9px;color:var(--g400);margin-top:6px;font-style:italic;padding:4px 0;border-top:1px solid var(--g200)}
 .ad-ref{font-size:.65em;vertical-align:super;font-weight:600;opacity:.7;margin-left:1px;line-height:1}
-html[lang="ar"] .ad-ref{margin-left:0;margin-right:1px}
+html[lang="fa"] .ad-ref{margin-left:0;margin-right:1px}
 .rationale ol{padding-left:20px;margin:0;list-style:none;counter-reset:rat-counter}
 .rationale ol li{margin-bottom:5px;counter-increment:rat-counter;position:relative;padding-left:22px}
 .rationale ol li::before{content:counter(rat-counter);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--ad);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
@@ -195,17 +196,17 @@ html[lang="ar"] .ad-ref{margin-left:0;margin-right:1px}
 .ad-dismiss{position:absolute;top:2px;right:4px;width:16px;height:16px;border:none;background:rgba(0,0,0,.15);color:#fff;font-size:10px;line-height:16px;text-align:center;border-radius:50%;cursor:pointer;z-index:3;padding:0;font-weight:700}
 .ad-dismiss:hover{background:rgba(0,0,0,.35)}
 .ad-dismiss:focus{outline:2px solid var(--ad);outline-offset:1px}
-html[lang="ar"] .ad-dismiss{right:auto;left:4px}
+html[lang="fa"] .ad-dismiss{right:auto;left:4px}
 /* RTL mirroring */
-html[lang="ar"] .iqa-sidebar{border-right:none;border-left:1px solid var(--g200)}
-html[lang="ar"] .iqa-body{direction:rtl}
-html[lang="ar"] .iqa-content{direction:rtl}
-html[lang="ar"] .breadcrumb{direction:rtl}
-html[lang="ar"] .rationale ol{padding-left:0;padding-right:20px}
-html[lang="ar"] .rationale ol li{padding-left:0;padding-right:22px}
-html[lang="ar"] .rationale ol li::before{left:auto;right:0}
-html[lang="ar"] .q-meta{direction:rtl}
-html[lang="ar"] .sr-meta{direction:rtl}
+html[lang="fa"] .iqa-sidebar{border-right:none;border-left:1px solid var(--g200)}
+html[lang="fa"] .iqa-body{direction:rtl}
+html[lang="fa"] .iqa-content{direction:rtl}
+html[lang="fa"] .breadcrumb{direction:rtl}
+html[lang="fa"] .rationale ol{padding-left:0;padding-right:20px}
+html[lang="fa"] .rationale ol li{padding-left:0;padding-right:22px}
+html[lang="fa"] .rationale ol li::before{left:auto;right:0}
+html[lang="fa"] .q-meta{direction:rtl}
+html[lang="fa"] .sr-meta{direction:rtl}
 /* Accessibility — focus visible on interactive */
 .ad-zone:focus-within{outline:2px solid var(--ad);outline-offset:2px}
 </style>
@@ -220,7 +221,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 </div>
 <div class="lang-toggle">
 <button class="lang-btn active" onclick="setLang('en')">EN</button>
-<button class="lang-btn" onclick="setLang('ar')">عربي</button>
+<button class="lang-btn" onclick="setLang('fa')">فارسی</button>
 </div>
 </div>
 <div class="page-tabs">
@@ -492,7 +493,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="widget"><div class="wt">Related Questions</div>
 <div class="wi">Is Divorce Valid during Menstruation?</div>
 <div class="wi">Sunan al-fitrah during menses</div>
-<div class="qa-card native-ad" style="margin-top:4px"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad" style="margin-top:4px"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 </div>
 </div>
 </div>
@@ -533,7 +534,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="section-title" style="margin-top:10px"><span class="bullet"></span>Related Questions</div>
 <div class="qa-card"><div class="q-title">Is Divorce Valid during Menstruation?</div><div class="q-meta"><span>Family Fiqh</span></div></div>
 <div class="qa-card"><div class="q-title">Sunan al-fitrah during menses</div><div class="q-meta"><span>Family Fiqh</span></div></div>
-<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 <div style="margin-top:6px"><span class="cat-tag">Family Fiqh</span><span class="cat-tag">Menstruation</span></div>
 </div>
 <div class="ad-zone az-sticky">AD: 320 × 50 — Slim Sticky<div class="dim">Dismissible ×</div></div>
@@ -586,7 +587,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer and the iqamah...</div><div class="q-meta"><span>27/08/2026</span><span>📥 💬</span></div></div>
 <div class="qa-card"><div class="q-title">She is suffering from addiction to the secret habit...</div><div class="q-meta"><span>25/08/2026</span><span>📥 💬</span></div></div>
 <div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span><span>📥 💬</span></div></div>
-<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 <a class="more-link">More ›</a>
 </div>
 <div class="ad-zone az-between">AD: 720 × 90<div class="dim">Between New Answers & Most Read</div></div>
@@ -632,7 +633,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="qa-card"><div class="q-title">She is suffering from addiction...</div><div class="q-meta"><span>25/08/2026</span></div></div>
 <div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span></div></div>
 <div class="qa-card"><div class="q-title">Ruling on reading Quran without wudu</div><div class="q-meta"><span>21/08/2026</span></div></div>
-<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 <div class="section-title"><span class="bullet"></span>Most Read</div>
 <div class="qa-card"><div class="q-title">Is Masturbation Haram in Islam?</div></div>
 <div class="qa-card"><div class="q-title">Is Music Haram?</div></div>
@@ -748,7 +749,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div><div class="q-meta"><span>27/08/2026</span></div></div>
 <div class="qa-card"><div class="q-title">She is suffering from addiction to the secret habit...</div><div class="q-meta"><span>25/08/2026</span></div></div>
 <div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div><div class="q-meta"><span>23/08/2026</span></div></div>
-<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 </div>
 <div class="home-section most-read"><div class="section-title"><span class="bullet"></span>Most Read Answers</div>
 <div class="mr-item"><span class="mr-num">1</span><span class="mr-title">Is Masturbation Haram in Islam?</span><span class="mr-views">2.9M</span></div>
@@ -782,7 +783,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="qa-card"><div class="q-title">If he was offering a supererogatory prayer...</div></div>
 <div class="qa-card"><div class="q-title">She is suffering from addiction...</div></div>
 <div class="qa-card"><div class="q-title">Is the Angel of Death one angel or many?</div></div>
-<div class="qa-card native-ad"><div class="q-title">Your question could be next — contribute to the scholars who answer</div><div class="q-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="qa-card native-ad"><div class="q-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div></div>
 <div class="section-title"><span class="bullet"></span>Most Read</div>
 <div class="qa-card"><div class="q-title">Is Masturbation Haram in Islam?</div></div>
 <div class="qa-card"><div class="q-title">Is Music Haram?</div></div>
@@ -834,7 +835,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding the one who deliberately missed prayers out of laziness...</div><div class="sr-meta">Fiqh · 520K views</div></div>
 <div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language other than Arabic for one who is able to learn...</div><div class="sr-meta">Basic Tenets · 410K views</div></div>
 <div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake in his recitation of al-Fatihah...</div><div class="sr-meta">Fiqh · 280K views</div></div>
-<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div></div>
 <div class="sr-card"><div class="sr-title">How many rak'ahs in Taraweeh?</div><div class="sr-snip">The scholars differed concerning the number of rak'ahs of Taraweeh...</div><div class="sr-meta">Fiqh · 190K views</div></div>
 </div>
 <div class="iqa-right">
@@ -862,7 +863,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr...</div></div>
 <div class="ad-zone az-between">AD: 320 × 100<div class="dim">After 3rd result</div></div>
 <div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding...</div></div>
-<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div></div>
 <div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language...</div></div>
 <div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div></div>
 </div>
@@ -948,7 +949,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness is prescribed for three reasons...</div><div class="sr-meta">Family Fiqh · 1.2M views</div></div>
 <div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">Praise be to Allah. The times of the prayers were mentioned...</div><div class="sr-meta">Fiqh · 890K views</div></div>
 <div class="sr-card"><div class="sr-title">Can you combine prayers when travelling?</div><div class="sr-snip">It is permissible to combine Zuhr and 'Asr...</div><div class="sr-meta">Fiqh · 650K views</div></div>
-<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div><div class="sr-snip">Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.</div></div>
 <div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed regarding...</div><div class="sr-meta">Fiqh · 520K views</div></div>
 <div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible to pray in any language other than Arabic...</div><div class="sr-meta">Basic Tenets · 410K views</div></div>
 <div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div><div class="sr-meta">Fiqh · 280K views</div></div>
@@ -976,7 +977,7 @@ html[lang="ar"] .sr-meta{direction:rtl}
 <div class="sr-card"><div class="sr-title">How is the prostration of forgetfulness done?</div><div class="sr-snip">The prostration of forgetfulness...</div></div>
 <div class="sr-card"><div class="sr-title">The times of the five daily prayers</div><div class="sr-snip">The times of the prayers were mentioned...</div></div>
 <div class="sr-card"><div class="sr-title">Can you combine prayers?</div><div class="sr-snip">It is permissible to combine...</div></div>
-<div class="sr-card native-ad"><div class="sr-title">Your question could be next — contribute to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div><div class="sr-meta"><span style="text-decoration:underline;cursor:pointer">Contribute</span></div></div>
+<div class="sr-card native-ad"><div class="sr-title">Your question could be next — <span class="native-cta">contribute</span> to the scholars who answer</div><div class="sr-snip">Your contribution keeps this service free for millions.</div></div>
 <div class="sr-card"><div class="sr-title">Making up missed prayers</div><div class="sr-snip">The scholars differed...</div></div>
 <div class="sr-card"><div class="sr-title">Is it permissible to pray in English?</div><div class="sr-snip">It is not permissible...</div></div>
 <div class="sr-card"><div class="sr-title">Praying behind an imam who makes mistakes</div><div class="sr-snip">If the imam makes a mistake...</div></div>
@@ -1181,126 +1182,126 @@ html[lang="ar"] .sr-meta{direction:rtl}
 </div>
 
 <script>
-const ar = {
-  'title': 'ICW-815 — خطة توزيع الإعلانات',
-  'subtitle': 'IslamQA.info · بنرات التبرع والمساهمة · توصيات مبنية على دراسات',
-  'tab-answer': 'صفحة الفتوى',
-  'tab-home': 'الرئيسية',
-  'tab-search': 'نتائج البحث',
-  'tab-ctx': 'أفكار إضافية',
-  'tab-pri': 'الأولويات والمواصفات',
-  'biz': 'إعلانات أكثر',
-  'ux': 'تجربة أفضل',
-  'bal': 'نهج متوازن',
-  'desktop': 'سطح المكتب',
-  'mobile': 'الجوال',
-  'ux-q': 'جودة التجربة',
-  'rev': 'العائد المتوقع',
-  'sum-title': 'ملخص المطلوب',
-  'sum-body': 'يحتاج موقع IslamQA إلى بنرات تبرع ومساهمة في مواضع مدروسة عبر ثلاث صفحات رئيسية: الفتوى، والرئيسية، والبحث — بحيث تحقق تبرعات فعلية دون أن تؤثر سلباً على تجربة القراءة. لكل صفحة ثلاثة خيارات: الأعلى عائداً، والأفضل للمستخدم، والمتوازن بينهما. اختر ما يناسب أهدافك.',
+const fa = {
+  'title': 'ICW-815 — استراتژی جایگاه‌گذاری تبلیغات',
+  'subtitle': 'IslamQA.info · بنرهای کمک مالی و مشارکت · توصیه‌های مبتنی بر تحقیقات',
+  'tab-answer': 'صفحه فتوا',
+  'tab-home': 'صفحه اصلی',
+  'tab-search': 'نتایج جستجو',
+  'tab-ctx': 'ایده‌های بیشتر',
+  'tab-pri': 'اولویت‌ها و مشخصات',
+  'biz': 'تبلیغات بیشتر',
+  'ux': 'تجربه بهتر',
+  'bal': 'رویکرد متعادل',
+  'desktop': 'دسکتاپ',
+  'mobile': 'موبایل',
+  'ux-q': 'کیفیت تجربه',
+  'rev': 'درآمد مورد انتظار',
+  'sum-title': 'خلاصه نیازمندی‌ها',
+  'sum-body': 'سایت IslamQA به بنرهای کمک مالی و مشارکت در جایگاه‌های مطالعه‌شده در سه صفحه اصلی نیاز دارد: فتوا، صفحه اصلی و جستجو — به‌گونه‌ای که کمک‌های مالی واقعی ایجاد کند بدون تأثیر منفی بر تجربه مطالعه. هر صفحه سه گزینه دارد: بیشترین درآمد، بهترین تجربه کاربری و متعادل. آنچه مناسب اهداف شماست را انتخاب کنید.',
   // Rationale
-  'r-ans-biz-d-title': 'لماذا إعلانات أكثر',
-  'r-ans-biz-d': '<li>٤ مواضع إعلانية (أعلى + وسط المحتوى + بعد الفتوى + شريط جانبي لاصق) = أقصى عدد مشاهدات لكل زيارة</li><li>الإعلان وسط المحتوى يستغل أن <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=74%25%20of%20the%20viewing%20time" target="_blank">٧٤٪ من وقت المشاهدة يُقضى في أول شاشتين (NNGroup)</a></li><li>الشريط الجانبي اللاصق — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=Double%20Viewability" target="_blank">يضاعف نسبة المشاهدة (AdPushup)</a></li><li>المقابل: قطع تدفق القراءة قد يرفع معدل المغادرة</li>',
-  'r-ans-biz-m-title': 'لماذا إعلانات أكثر',
-  'r-ans-biz-m': '<li>٣ مواضع — وسط المحتوى + بعد الفتوى + شريط سفلي دائم</li><li>الشريط السفلي الدائم — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">يرفع نسبة النقر ٤٠-٦٠٪ (AdPushup)</a></li><li>يستهلك ~١٥٪ من شاشة الجوال</li>',
-  'r-ans-ux-d-title': 'لماذا هو الأفضل للمستخدم',
-  'r-ans-ux-d': '<li>بدون أي مقاطعة — الفتوى كاملة من أولها لآخرها، وإعلان واحد فقط بعد النهاية</li><li>الإعلان بعد تقديم الفائدة يستفيد من <a href="https://www.nngroup.com/articles/reciprocity-principle/#:~:text=reciprocity" target="_blank">مبدأ المعاملة بالمثل (NNGroup)</a> — القارئ أخذ ما يريد وأصبح أكثر استعداداً للتفاعل</li><li>لا خطر من تجاهل البنرات — <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=tendency%20to%20ignore%20page%20elements" target="_blank">المستخدمون يتجاهلون ما يشبه الإعلان وسط المحتوى (NNGroup)</a></li><li>الشريط الجانبي ثابت (غير لاصق) — أقل إزعاجاً</li>',
-  'r-ans-ux-m-title': 'لماذا هو الأفضل للمستخدم',
-  'r-ans-ux-m': '<li>إعلان واحد بعد المحتوى — أنظف تجربة قراءة على الجوال</li><li>لا عناصر لاصقة تأكل من الشاشة</li><li><a href="https://www.nngroup.com/articles/ad-placement-study/#:~:text=pleasant" target="_blank">التجربة الإعلانية المريحة تزيد الزيارات المتكررة (NNGroup)</a></li>',
-  'r-ans-bal-d-title': 'لماذا هو متوازن',
-  'r-ans-bal-d': '<li>بنر علوي يظهر فوراً ويختفي بالتمرير — <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=above%20the%20fold" target="_blank">المحتوى فوق الطية يحظى بأعلى انتباه (NNGroup)</a></li><li>لا إعلانات وسط المحتوى — تدفق القراءة محفوظ بالكامل</li><li>إعلان بعد الفتوى عند نقطة المعاملة بالمثل + شريط جانبي لاصق للظهور المستمر</li><li>مواضع أقل = <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=Do%20not%20mix%20content%20and%20ads" target="_blank">إرهاق إعلاني أقل (NNGroup)</a></li>',
-  'r-ans-bal-m-title': 'لماذا هو متوازن',
-  'r-ans-bal-m': '<li>إعلان بعد الفتوى عند نقطة المعاملة بالمثل</li><li>شريط سفلي رفيع (٥٠ بكسل) — حد أدنى من الشاشة — <a href="https://web.dev/articles/cls#:~:text=layout%20shift" target="_blank">إزاحة أقل = تجربة أفضل (web.dev)</a></li><li>قابل للإغلاق — يُحفظ في الجلسة</li>',
-  'r-home-biz-d-title': 'لماذا إعلانات أكثر',
-  'r-home-biz-d': '<li>٤ مواضع — بنر رئيسي + ٢ بين الأقسام + شريط جانبي لاصق</li><li>البنر الرئيسي يلتقط النظرة الأولى — <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/#:~:text=horizontal%20movement" target="_blank">أول حركة أفقية للعين (NNGroup)</a></li><li>الرئيسية صفحة تنقّل — المستخدم لا يقرأ بعمق، فتقبّله للإعلانات أعلى</li>',
-  'r-home-biz-m-title': 'لماذا إعلانات أكثر',
-  'r-home-biz-m': '<li>٣ مواضع + شريط سفلي دائم — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">يرفع نسبة النقر ٤٠-٦٠٪ (AdPushup)</a></li>',
-  'r-home-ux-d-title': 'لماذا هو الأفضل للمستخدم',
-  'r-home-ux-d': '<li>إعلان واحد في الشريط الجانبي فقط — منطقة المحتوى خالية تماماً</li><li>الرئيسية النظيفة تمنع — <a href="https://www.nngroup.com/articles/homepage-real-estate-allocation/#:~:text=clutter" target="_blank">الفوضى تجعل المستخدم يفوّت المحتوى المهم (NNGroup)</a></li>',
-  'r-home-bal-d-title': 'لماذا هو متوازن',
-  'r-home-bal-d': '<li>بنر علوي + شريط جانبي = موضعان فقط، بدون قطع للمحتوى</li><li>لا إعلانات بين الأقسام — التنقل طبيعي</li>',
-  'r-srch-biz-d-title': 'لماذا إعلانات أكثر',
-  'r-srch-biz-d': '<li>٤ مواضع — أعلى + ٢ بين النتائج + شريط جانبي لاصق</li><li>الإعلانات بين النتائج تحاكي نمط Google — <a href="https://www.nngroup.com/articles/search-ads-vs-organic/#:~:text=sponsored" target="_blank">المواضع ٢-٤ تحصل على أعلى نقرات (NNGroup)</a></li><li>المقابل: الكثافة العالية قد تزعج المستخدمين المتكررين</li>',
-  'r-srch-ux-d-title': 'لماذا هو الأفضل للمستخدم',
-  'r-srch-ux-d': '<li>قائمة النتائج نظيفة تماماً — لا قطع أثناء التصفح</li><li>الإعلان بعد كل النتائج — أغلب المستخدمين ينقرون على نتيجة قبل الوصول إليه</li><li>البحث شريان حياة — <a href="https://www.nngroup.com/articles/search-visible-and-simple/#:~:text=search" target="_blank">لا تعرقله (NNGroup)</a></li>',
-  'r-srch-bal-d-title': 'لماذا هو متوازن',
-  'r-srch-bal-d': '<li>إعلان واحد بعد النتيجة الثالثة — المستخدم يرى ٣ نتائج حقيقية أولاً</li><li>لا بنر علوي — شريط البحث يبقى بارزاً</li><li>الشريط الجانبي يوفر ظهوراً ثانوياً هادئاً</li>',
+  'r-ans-biz-d-title': 'چرا تبلیغات بیشتر',
+  'r-ans-biz-d': '<li>۴ جایگاه تبلیغاتی (بالا + میان محتوا + بعد از فتوا + نوار کناری چسبان) = بیشترین نمایش در هر بازدید</li><li>تبلیغ میان محتوا از این بهره می‌برد که <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=74%25%20of%20the%20viewing%20time" target="_blank">٪۷۴ زمان مشاهده در دو صفحه اول صرف می‌شود (NNGroup)</a></li><li>نوار کناری چسبان — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=Double%20Viewability" target="_blank">نرخ مشاهده را دو برابر می‌کند (AdPushup)</a></li><li>هزینه: قطع جریان مطالعه ممکن است نرخ خروج را بالا ببرد</li>',
+  'r-ans-biz-m-title': 'چرا تبلیغات بیشتر',
+  'r-ans-biz-m': '<li>۳ جایگاه — میان محتوا + بعد از فتوا + نوار پایین دائمی</li><li>نوار پایین دائمی — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">نرخ کلیک را ۴۰-۶۰٪ افزایش می‌دهد (AdPushup)</a></li><li>حدود ۱۵٪ از صفحه موبایل را اشغال می‌کند</li>',
+  'r-ans-ux-d-title': 'چرا بهترین تجربه کاربری',
+  'r-ans-ux-d': '<li>بدون هیچ وقفه‌ای — فتوا کامل از ابتدا تا انتها، فقط یک تبلیغ بعد از پایان</li><li>تبلیغ بعد از ارائه ارزش از <a href="https://www.nngroup.com/articles/reciprocity-principle/#:~:text=reciprocity" target="_blank">اصل متقابل (NNGroup)</a> بهره می‌برد — خواننده آنچه می‌خواست را گرفته و آمادگی بیشتری برای تعامل دارد</li><li>خطر نادیده‌گرفتن بنرها نیست — <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=tendency%20to%20ignore%20page%20elements" target="_blank">کاربران عناصر شبیه تبلیغ میان محتوا را نادیده می‌گیرند (NNGroup)</a></li><li>نوار کناری ثابت (غیرچسبان) — کمتر مزاحم</li>',
+  'r-ans-ux-m-title': 'چرا بهترین تجربه کاربری',
+  'r-ans-ux-m': '<li>یک تبلیغ بعد از محتوا — تمیزترین تجربه مطالعه در موبایل</li><li>بدون عناصر چسبان که از صفحه می‌خورند</li><li><a href="https://www.nngroup.com/articles/ad-placement-study/#:~:text=pleasant" target="_blank">تجربه تبلیغاتی راحت بازدیدهای مکرر را افزایش می‌دهد (NNGroup)</a></li>',
+  'r-ans-bal-d-title': 'چرا متعادل',
+  'r-ans-bal-d': '<li>بنر بالا فوراً ظاهر و با اسکرول ناپدید می‌شود — <a href="https://www.nngroup.com/articles/scrolling-and-attention/#:~:text=above%20the%20fold" target="_blank">محتوای بالای خط تا بیشترین توجه را جلب می‌کند (NNGroup)</a></li><li>بدون تبلیغ میان محتوا — جریان مطالعه کاملاً حفظ شده</li><li>تبلیغ بعد از فتوا در نقطه متقابل + نوار کناری چسبان برای نمایش مداوم</li><li>جایگاه‌های کمتر = <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/#:~:text=Do%20not%20mix%20content%20and%20ads" target="_blank">خستگی تبلیغاتی کمتر (NNGroup)</a></li>',
+  'r-ans-bal-m-title': 'چرا متعادل',
+  'r-ans-bal-m': '<li>تبلیغ بعد از فتوا در نقطه متقابل</li><li>نوار پایین باریک (۵۰ پیکسل) — حداقل فضای صفحه — <a href="https://web.dev/articles/cls#:~:text=layout%20shift" target="_blank">جابجایی کمتر = تجربه بهتر (web.dev)</a></li><li>قابل بستن — در نشست ذخیره می‌شود</li>',
+  'r-home-biz-d-title': 'چرا تبلیغات بیشتر',
+  'r-home-biz-d': '<li>۴ جایگاه — بنر اصلی + ۲ بین بخش‌ها + نوار کناری چسبان</li><li>بنر اصلی اولین نگاه را جلب می‌کند — <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/#:~:text=horizontal%20movement" target="_blank">اولین حرکت افقی چشم (NNGroup)</a></li><li>صفحه اصلی صفحه پیمایش است — کاربر عمیق نمی‌خواند، پذیرش تبلیغات بالاتر است</li>',
+  'r-home-biz-m-title': 'چرا تبلیغات بیشتر',
+  'r-home-biz-m': '<li>۳ جایگاه + نوار پایین دائمی — <a href="https://www.adpushup.com/blog/sticky-ads/#:~:text=40-60%25%20Higher%20CTR" target="_blank">نرخ کلیک را ۴۰-۶۰٪ افزایش می‌دهد (AdPushup)</a></li>',
+  'r-home-ux-d-title': 'چرا بهترین تجربه کاربری',
+  'r-home-ux-d': '<li>فقط یک تبلیغ در نوار کناری — ناحیه محتوا کاملاً خالی</li><li>صفحه اصلی تمیز جلوگیری می‌کند از — <a href="https://www.nngroup.com/articles/homepage-real-estate-allocation/#:~:text=clutter" target="_blank">شلوغی باعث می‌شود کاربر محتوای مهم را از دست بدهد (NNGroup)</a></li>',
+  'r-home-bal-d-title': 'چرا متعادل',
+  'r-home-bal-d': '<li>بنر بالا + نوار کناری = فقط دو جایگاه، بدون قطع محتوا</li><li>بدون تبلیغ بین بخش‌ها — پیمایش طبیعی</li>',
+  'r-srch-biz-d-title': 'چرا تبلیغات بیشتر',
+  'r-srch-biz-d': '<li>۴ جایگاه — بالا + ۲ بین نتایج + نوار کناری چسبان</li><li>تبلیغات بین نتایج الگوی Google را تقلید می‌کند — <a href="https://www.nngroup.com/articles/search-ads-vs-organic/#:~:text=sponsored" target="_blank">جایگاه‌های ۲-۴ بیشترین کلیک را دارند (NNGroup)</a></li><li>هزینه: تراکم بالا ممکن است کاربران مکرر را آزار دهد</li>',
+  'r-srch-ux-d-title': 'چرا بهترین تجربه کاربری',
+  'r-srch-ux-d': '<li>لیست نتایج کاملاً تمیز — بدون وقفه هنگام مرور</li><li>تبلیغ بعد از همه نتایج — اکثر کاربران قبل از رسیدن به آن روی نتیجه‌ای کلیک می‌کنند</li><li>جستجو شریان حیاتی است — <a href="https://www.nngroup.com/articles/search-visible-and-simple/#:~:text=search" target="_blank">مانع آن نشوید (NNGroup)</a></li>',
+  'r-srch-bal-d-title': 'چرا متعادل',
+  'r-srch-bal-d': '<li>یک تبلیغ بعد از نتیجه سوم — کاربر ابتدا ۳ نتیجه واقعی می‌بیند</li><li>بدون بنر بالا — نوار جستجو برجسته باقی می‌ماند</li><li>نوار کناری نمایش ثانویه آرام فراهم می‌کند</li>',
   // Contextual
-  'ctx-label': 'أفكار إضافية للمواضع',
-  'ctx-popover-title': 'نافذة منبثقة (أسفل اليمين)',
-  'ctx-popover-desc': 'تنزلق بهدوء بعد ٣٠ ثانية أو عند تمرير ٦٠٪ من الصفحة. قابلة للإغلاق، تُعرض مرة واحدة في الجلسة.',
-  'ctx-popover-h': 'ادعم الإسلام سؤال وجواب',
-  'ctx-popover-p': 'الفتوى رقم ٤٨٢٩٣ ساعدت شخصاً اليوم. ساعدنا نستمر.',
-  'ctx-popover-btn': 'ساهم',
-  'ctx-impact-title': 'دعوة بقصة أثر',
-  'ctx-impact-desc': 'بنر ديناميكي يستخدم إحصائيات الفتاوى الفعلية لتخصيص طلب التبرع.',
-  'ctx-download-title': 'دعوة بعد التحميل أو الطباعة',
-  'ctx-download-desc': 'بعد تحميل أو طباعة الفتوى كملف PDF، يظهر بنر لمرة واحدة: «هذه الفتوى وصلتك مجاناً — ساعدنا نوصلها لغيرك.»',
-  'ctx-question-title': 'دعوة بعد إرسال السؤال',
-  'ctx-question-desc': 'بعد إرسال سؤال للعلماء، يظهر طلب مساهمة في صفحة التأكيد: «سؤالك قيد المراجعة. ادعم العلماء الذين يجيبون.»',
-  'ctx-streak-title': 'بعد قراءة عدة فتاوى',
-  'ctx-streak-desc': 'بعد قراءة ٣ فتاوى أو أكثر في جلسة واحدة، يظهر تنبيه: «قرأت ٣ فتاوى اليوم — كل فتوى تحتاج بحثاً ومراجعة. ساعدنا نستمر.»',
-  'ctx-exit-title': 'رسالة قبل المغادرة',
-  'ctx-exit-desc': 'تظهر عند نية الرجوع أو إغلاق التبويب. «قبل ما تمشي — هذه الفتوى وصلتك بفضل متبرعين مثلك.»',
-  'ctx-season-title': 'حملة موسمية (رمضان / ذو الحجة)',
-  'ctx-season-desc': 'بنر بعرض الصفحة خلال فترات الذروة. التحديد بوقت يزيد الإلحاح ويقلل إرهاق الإعلانات.',
+  'ctx-label': 'ایده‌های بیشتر برای جایگاه‌ها',
+  'ctx-popover-title': 'پنجره بازشو (پایین سمت راست)',
+  'ctx-popover-desc': 'بعد از ۳۰ ثانیه یا پیمایش ۶۰٪ صفحه آرام ظاهر می‌شود. قابل بستن، فقط یک بار در هر نشست.',
+  'ctx-popover-h': 'از IslamQA حمایت کنید',
+  'ctx-popover-p': 'فتوای شماره ۴۸۲۹۳ امروز به کسی کمک کرد. کمک کنید ادامه دهیم.',
+  'ctx-popover-btn': 'مشارکت',
+  'ctx-impact-title': 'فراخوان با داستان تأثیر',
+  'ctx-impact-desc': 'بنر پویا که از آمار واقعی فتواها برای شخصی‌سازی درخواست کمک مالی استفاده می‌کند.',
+  'ctx-download-title': 'فراخوان بعد از دانلود یا چاپ',
+  'ctx-download-desc': 'بعد از دانلود یا چاپ فتوا به‌صورت PDF، یک بنر یکباره ظاهر می‌شود: «این فتوا رایگان به شما رسید — کمک کنید به دیگران هم برسد.»',
+  'ctx-question-title': 'فراخوان بعد از ارسال سؤال',
+  'ctx-question-desc': 'بعد از ارسال سؤال به علما، درخواست مشارکت در صفحه تأیید ظاهر می‌شود: «سؤال شما در حال بررسی است. از علمایی که پاسخ می‌دهند حمایت کنید.»',
+  'ctx-streak-title': 'بعد از مطالعه چند فتوا',
+  'ctx-streak-desc': 'بعد از مطالعه ۳ فتوا یا بیشتر در یک نشست، اعلانی ظاهر می‌شود: «امروز ۳ فتوا خواندید — هر فتوا نیاز به تحقیق و بررسی دارد. کمک کنید ادامه دهیم.»',
+  'ctx-exit-title': 'پیام قبل از خروج',
+  'ctx-exit-desc': 'هنگام قصد بازگشت یا بستن تب ظاهر می‌شود. «قبل از رفتن — این فتوا به لطف حامیانی مثل شما به دستتان رسید.»',
+  'ctx-season-title': 'کمپین فصلی (رمضان / ذوالحجه)',
+  'ctx-season-desc': 'بنر تمام‌عرض در دوره‌های اوج. محدودیت زمانی فوریت ایجاد می‌کند و خستگی تبلیغاتی را کاهش می‌دهد.',
   // Priority
-  'pri-title': 'ترتيب التنفيذ المقترح',
-  'pri-1': 'صفحة الفتوى (سطح المكتب) — بنر علوي + إعلان بعد الإجابة + شريط جانبي لاصق',
-  'pri-note-1': 'تدفق القراءة محفوظ بالكامل — لا مقاطعة وسط المحتوى. البنر العلوي يلتقط الانطباع الأول، وإعلان ما بعد الفتوى يستفيد من مبدأ المعاملة بالمثل، والشريط الجانبي يوفر ظهوراً مستمراً.',
-  'pri-2': 'صفحة البحث (سطح المكتب) — إعلان بعد النتيجة الثالثة + شريط جانبي',
-  'pri-note-2': 'المستخدم يرى ٣ نتائج حقيقية قبل أي إعلان — البحث يبقى مفيداً. لا بنر علوي يحافظ على بروز شريط البحث.',
-  'pri-3': 'الرئيسية (سطح المكتب) — بنر علوي + شريط جانبي',
-  'pri-note-3': 'الرئيسية صفحة تنقّل — المستخدمون يتقبلون الإعلانات فيها أكثر. موضعان فقط بدون قطع لأقسام المحتوى.',
-  'pri-4': 'صفحة الفتوى (الجوال) — إعلان بعد الإجابة + شريط سفلي رفيع قابل للإغلاق',
-  'pri-note-4': 'شريط رفيع ٥٠ بكسل يستهلك أقل مساحة ممكنة. قابل للإغلاق يحترم اختيار المستخدم. إعلان ما بعد الفتوى في نقطة توقف طبيعية.',
-  'pri-5': 'دعوات سياقية — نافذة منبثقة، بعد التحميل، بعد إرسال السؤال',
-  'pri-note-5': 'غير مزعجة، تعتمد على لحظات التفاعل العالي. بعد التحميل وبعد إرسال السؤال أقوى لحظات المعاملة بالمثل — المستخدم تلقّى الفائدة للتو.',
-  'pri-6': 'البحث والرئيسية (الجوال) — بنر علوي أو إعلان واحد ضمن المحتوى',
-  'pri-note-6': 'مستخدمو الجوال ينتقلون بسرعة — إعلان واحد لكل صفحة يجنّب إرهاق التمرير. يكمّل تغطية الجوال مع صفحة الفتوى.',
-  'pri-tag-bal': 'متوازن',
-  'pri-tag-ctx': 'سياقي',
+  'pri-title': 'ترتیب اجرای پیشنهادی',
+  'pri-1': 'صفحه فتوا (دسکتاپ) — بنر بالا + تبلیغ بعد از پاسخ + نوار کناری چسبان',
+  'pri-note-1': 'جریان مطالعه کاملاً حفظ شده — بدون وقفه میان محتوا. بنر بالا اولین برداشت را جلب می‌کند، تبلیغ بعد از فتوا از اصل متقابل بهره می‌برد و نوار کناری نمایش مداوم فراهم می‌کند.',
+  'pri-2': 'صفحه جستجو (دسکتاپ) — تبلیغ بعد از نتیجه سوم + نوار کناری',
+  'pri-note-2': 'کاربر ابتدا ۳ نتیجه واقعی می‌بیند — جستجو مفید باقی می‌ماند. بدون بنر بالا نوار جستجو برجسته می‌ماند.',
+  'pri-3': 'صفحه اصلی (دسکتاپ) — بنر بالا + نوار کناری',
+  'pri-note-3': 'صفحه اصلی صفحه پیمایش است — کاربران تبلیغات را بیشتر می‌پذیرند. فقط دو جایگاه بدون قطع بخش‌های محتوا.',
+  'pri-4': 'صفحه فتوا (موبایل) — تبلیغ بعد از پاسخ + نوار پایین باریک قابل بستن',
+  'pri-note-4': 'نوار باریک ۵۰ پیکسل کمترین فضا را اشغال می‌کند. قابل بستن بودن انتخاب کاربر را محترم می‌شمارد. تبلیغ بعد از فتوا در نقطه توقف طبیعی.',
+  'pri-5': 'فراخوان‌های زمینه‌ای — پنجره بازشو، بعد از دانلود، بعد از ارسال سؤال',
+  'pri-note-5': 'غیرمزاحم، مبتنی بر لحظات تعامل بالا. بعد از دانلود و بعد از ارسال سؤال قوی‌ترین لحظات متقابل هستند — کاربر تازه ارزش دریافت کرده.',
+  'pri-6': 'جستجو و صفحه اصلی (موبایل) — بنر بالا یا یک تبلیغ در محتوا',
+  'pri-note-6': 'کاربران موبایل سریع حرکت می‌کنند — یک تبلیغ در هر صفحه از خستگی اسکرول جلوگیری می‌کند. پوشش موبایل را با صفحه فتوا تکمیل می‌کند.',
+  'pri-tag-bal': 'متعادل',
+  'pri-tag-ctx': 'زمینه‌ای',
   // Specs
-  'spec-title': 'مناطق Revive المقترحة',
-  'spec-zone': 'المنطقة',
-  'spec-dim': 'الأبعاد',
-  'spec-pages': 'الصفحات',
-  'spec-pos': 'الموضع',
-  'spec-note': 'هذه مناطق جديدة مقترحة. بعضها قد يُعاد استخدامه من مناطق Revive الحالية — انظر العائق أدناه.',
-  'spec-p1': 'الفتوى، الرئيسية، البحث',
-  'spec-pos1': 'أسفل شريط التنقل (سطح المكتب)',
-  'spec-pos2': 'الشريط الجانبي',
-  'spec-p3': 'الفتوى',
-  'spec-pos3': 'بعد الفتوى / وسط المحتوى',
-  'spec-pos4': 'أعلى الجوال / ضمن المحتوى',
-  'spec-pos5': 'شريط سفلي لاصق للجوال (قابل للإغلاق)',
-  'spec-p6': 'البحث',
-  'spec-pos6': 'بين نتائج البحث',
-  'spec-pos7': 'نافذة منبثقة (أسفل اليمين)',
-  'spec-p8': 'الفتوى، الرئيسية، البحث',
-  'spec-pos8': 'بطاقة مدمجة (تحل محل بنر واحد في كل صفحة)',
-  'template-title': 'مواصفات التنفيذ',
-  'template-html-title': 'قالب HTML — منطقة إعلان بنر',
-  'template-native-title': 'قالب HTML — بطاقة مدمجة',
+  'spec-title': 'زون‌های پیشنهادی Revive',
+  'spec-zone': 'زون',
+  'spec-dim': 'ابعاد',
+  'spec-pages': 'صفحات',
+  'spec-pos': 'جایگاه',
+  'spec-note': 'اینها زون‌های جدید پیشنهادی هستند. برخی ممکن است از زون‌های فعلی Revive بازاستفاده شوند — موانع زیر را ببینید.',
+  'spec-p1': 'فتوا، صفحه اصلی، جستجو',
+  'spec-pos1': 'زیر نوار ناوبری (دسکتاپ)',
+  'spec-pos2': 'نوار کناری',
+  'spec-p3': 'فتوا',
+  'spec-pos3': 'بعد از فتوا / میان محتوا',
+  'spec-pos4': 'بالای موبایل / درون محتوا',
+  'spec-pos5': 'نوار پایین چسبان موبایل (قابل بستن)',
+  'spec-p6': 'جستجو',
+  'spec-pos6': 'بین نتایج جستجو',
+  'spec-pos7': 'پنجره بازشو (پایین سمت راست)',
+  'spec-p8': 'فتوا، صفحه اصلی، جستجو',
+  'spec-pos8': 'کارت یکپارچه (جایگزین یک بنر در هر صفحه)',
+  'template-title': 'مشخصات پیاده‌سازی',
+  'template-html-title': 'قالب HTML — زون تبلیغ بنری',
+  'template-native-title': 'قالب HTML — کارت یکپارچه',
   // Blocker
-  'blocker-title': 'عائق: مناطق Revive الحالية غير معروفة',
-  'blocker-desc': 'لا تحدد التذكرة مناطق خادم Revive الموجودة حالياً. قبل التنفيذ، نحتاج قائمة بمعرّفات المناطق الحالية وأبعادها وأماكن عرضها. هذا يحدد هل ننشئ مناطق جديدة أم نعيد تعيين الموجودة — مما يؤثر مباشرة على حجم العمل ودقة تتبع الأداء.',
-  'no-ads-mobile': 'لا إعلانات على الرئيسية في الجوال — المستخدمون ينتقلون بسرعة، العائد ضعيف جداً.',
+  'blocker-title': 'مانع: زون‌های فعلی Revive نامشخص',
+  'blocker-desc': 'تیکت زون‌های فعلی سرور Revive را مشخص نمی‌کند. قبل از پیاده‌سازی، به لیست شناسه‌ها، ابعاد و مکان نمایش زون‌های فعلی نیاز داریم. این تعیین می‌کند آیا زون‌های جدید بسازیم یا موجودها را بازتخصیص دهیم — که مستقیماً بر حجم کار و دقت ردیابی عملکرد تأثیر می‌گذارد.',
+  'no-ads-mobile': 'بدون تبلیغ در صفحه اصلی موبایل — کاربران سریع حرکت می‌کنند، بازده بسیار ضعیف.',
 };
 
 const originals = {};
 
 function setLang(lang) {
   document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.lang-btn[onclick*="'+lang+'"]').classList.add('active');
 
   document.querySelectorAll('[data-t]').forEach(el => {
     const key = el.getAttribute('data-t');
-    if (lang === 'ar' && ar[key]) {
+    if (lang === 'fa' && fa[key]) {
       if (!originals[key]) originals[key] = el.innerHTML;
-      el.innerHTML = ar[key];
+      el.innerHTML = fa[key];
     } else if (lang === 'en' && originals[key]) {
       el.innerHTML = originals[key];
     }
@@ -1310,8 +1311,8 @@ function setLang(lang) {
 }
 
 function showPage(p){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.page-tab').forEach(e=>e.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');const m={answer:0,home:1,search:2,contextual:3,priority:4},tabs=document.querySelectorAll('.page-tab');if(m[p]!==undefined&&tabs[m[p]])tabs[m[p]].classList.add('active')}
-function showOpt(pg,opt){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.opt-tab').forEach(e=>e.classList.remove('active'));const p=document.getElementById(pg+'-'+opt);if(p){p.classList.add('active');const ap=c.querySelector('.plat-tab.active'),pk=ap&&ap.textContent.trim().toLowerCase()==='mobile'||ap&&ap.textContent.trim()==='الجوال'?'mobile':'desktop',sp=document.getElementById(pg+'-'+opt+'-'+pk);if(sp)sp.classList.add('active')}c.querySelectorAll('.opt-tab.'+opt).forEach(e=>e.classList.add('active'))}
-function showPlat(pg,pl){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.plat-tab').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.plat-tab').forEach(e=>{const t=e.textContent.trim().toLowerCase();if(t===pl||t==='الجوال'&&pl==='mobile'||t==='سطح المكتب'&&pl==='desktop')e.classList.add('active')});const ao=c.querySelector('.opt-tab.active');let ok='biz';if(ao){if(ao.classList.contains('ux'))ok='ux';else if(ao.classList.contains('bal'))ok='bal'}const op=document.getElementById(pg+'-'+ok);if(op){op.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));const t=document.getElementById(pg+'-'+ok+'-'+pl);if(t)t.classList.add('active')}}
+function showOpt(pg,opt){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.opt-tab').forEach(e=>e.classList.remove('active'));const p=document.getElementById(pg+'-'+opt);if(p){p.classList.add('active');const ap=c.querySelector('.plat-tab.active'),pk=ap&&ap.textContent.trim().toLowerCase()==='mobile'||ap&&ap.textContent.trim()==='موبایل'?'mobile':'desktop',sp=document.getElementById(pg+'-'+opt+'-'+pk);if(sp)sp.classList.add('active')}c.querySelectorAll('.opt-tab.'+opt).forEach(e=>e.classList.add('active'))}
+function showPlat(pg,pl){const c=document.getElementById('page-'+pg).querySelector('.card');c.querySelectorAll('.plat-tab').forEach(e=>e.classList.remove('active'));c.querySelectorAll('.plat-tab').forEach(e=>{const t=e.textContent.trim().toLowerCase();if(t===pl||t==='موبایل'&&pl==='mobile'||t==='دسکتاپ'&&pl==='desktop')e.classList.add('active')});const ao=c.querySelector('.opt-tab.active');let ok='biz';if(ao){if(ao.classList.contains('ux'))ok='ux';else if(ao.classList.contains('bal'))ok='bal'}const op=document.getElementById(pg+'-'+ok);if(op){op.querySelectorAll('.option-panel').forEach(e=>e.classList.remove('active'));const t=document.getElementById(pg+'-'+ok+'-'+pl);if(t)t.classList.add('active')}}
 function navigateTo(pg,opt,pl){showPage(pg);if(pg==='contextual'||pg==='priority')return;setTimeout(()=>{if(opt)showOpt(pg,opt);setTimeout(()=>{if(pl)showPlat(pg,pl);const c=document.getElementById('page-'+pg).querySelector('.card');if(c)c.scrollIntoView({behavior:'smooth',block:'start'})},50)},50)}
 
 // Auto-wire data-t on rationale blocks based on parent panel ID
@@ -1347,121 +1348,121 @@ document.querySelectorAll('.option-panel[id]').forEach(panel => {
   if (ul) ul.setAttribute('data-t', key);
 });
 
-// Translate wireframe site content to Arabic MSA
+// Translate wireframe site content to Farsi
 function translateWireframes(lang){
   var m={
-    'IslamQA':'الإسلام سؤال وجواب',
-    'Search for a question or fatwa...':'ابحث عن سؤال أو فتوى...',
-    'Search...':'ابحث...',
-    'Contribute':'ساهم',
-    'English ▾':'العربية ▾',
-    'My account':'حسابي',
-    'New Answers':'إجابات جديدة',
-    'Category tree':'شجرة التصنيفات',
-    'Essential Answers':'أهم الإجابات',
+    'IslamQA':'اسلام پرسش و پاسخ',
+    'Search for a question or fatwa...':'جستجوی سؤال یا فتوا...',
+    'Search...':'جستجو...',
+    'Contribute':'مشارکت',
+    'English ▾':'فارسی ▾',
+    'My account':'حساب من',
+    'New Answers':'پاسخ‌های جدید',
+    'Category tree':'درخت دسته‌بندی‌ها',
+    'Essential Answers':'پاسخ‌های ضروری',
     'Articles':'مقالات',
-    'Books':'كتب',
-    'Send a question':'أرسل سؤالاً',
-    'Home':'الرئيسية',
-    'Family Fiqh':'فقه الأسرة',
-    'Menstruation & Post-Natal Bleeding':'الحيض والنفاس',
-    'Can You Read the Quran during Your Period?':'هل يجوز للحائض قراءة القرآن؟',
-    'Sheikh Muhammed Salih Al-Munajjid':'الشيخ محمد صالح المنجد',
-    'The Majority View (Prohibition)':'رأي الجمهور (المنع)',
-    'The Minority View (Permissibility)':'رأي آخر (الجواز)',
-    'The Majority View':'رأي الجمهور',
-    'The Minority View':'رأي آخر',
-    'Related Questions':'أسئلة ذات صلة',
-    'Is Divorce Valid during Menstruation?':'هل يقع الطلاق في الحيض؟',
-    'Sunan al-fitrah during menses':'سنن الفطرة أثناء الحيض',
-    'If the menses lasts longer than usual':'إذا زاد الحيض عن عادته',
-    'Categories':'التصنيفات',
-    'Menstruation':'الحيض',
-    'Quran Sciences':'علوم القرآن',
-    'Basic Tenets':'أصول الإيمان',
-    'Basic Tenets (131)':'أصول الإيمان (١٣١)',
-    'Hadith':'الحديث',
-    'Hadith (76)':'الحديث (٧٦)',
-    'Family Fiqh (113)':'فقه الأسرة (١١٣)',
-    'Quran':'القرآن',
-    'Quran (134)':'القرآن (١٣٤)',
-    'Fiqh':'الفقه',
-    'Most Read Answers':'أكثر الإجابات قراءة',
-    'Most Read':'الأكثر قراءة',
-    'More ›':'المزيد ‹',
-    'If he was offering a supererogatory prayer and the iqamah...':'إذا كان يصلي نافلة وأُقيمت الصلاة...',
-    'If he was offering a supererogatory prayer...':'إذا كان يصلي نافلة وأُقيمت...',
-    'She is suffering from addiction to the secret habit...':'تعاني من إدمان العادة السرية...',
-    'She is suffering from addiction...':'تعاني من إدمان العادة السرية...',
-    'Is the Angel of Death one angel or many?':'هل ملك الموت واحد أم متعدد؟',
-    'Is Masturbation Haram in Islam?':'هل الاستمناء حرام في الإسلام؟',
-    'Is Music Haram?':'هل الموسيقى حرام؟',
-    'How to Make Ghusl for Major Impurity':'كيفية الغسل من الجنابة',
-    'What Are the Virtues of Muharram?':'ما فضائل شهر محرم؟',
-    'Fasting on Ashura: Complete Guide':'صيام عاشوراء: دليل شامل',
-    'Ruling on reading Quran without wudu':'حكم قراءة القرآن بدون وضوء',
-    '70 Matters Related to Fasting':'سبعون مسألة في الصيام',
-    'Disallowed Matters':'المحرمات',
-    'How is the prostration of forgetfulness done in prayer?':'كيف يكون سجود السهو في الصلاة؟',
-    'How is the prostration of forgetfulness done?':'كيف يكون سجود السهو؟',
-    'The times of the five daily prayers':'مواقيت الصلوات الخمس',
-    'Can you combine prayers when travelling?':'هل يجوز الجمع بين الصلوات في السفر؟',
-    'Can you combine prayers?':'هل يجوز الجمع بين الصلوات؟',
-    'Making up missed prayers':'قضاء الصلوات الفائتة',
-    'Is it permissible to pray in English?':'هل يجوز الصلاة بالإنجليزية؟',
-    'Praying behind an imam who makes mistakes':'الصلاة خلف إمام يخطئ',
-    "How many rak'ahs in Taraweeh?":'كم ركعة في التراويح؟',
-    'prayer times':'مواقيت الصلاة',
-    'All':'الكل',
-    'Answers':'الإجابات',
-    '© Islam Q&A 1997-2025 · About · Privacy Policy':'© الإسلام سؤال وجواب ١٩٩٧-٢٠٢٥ · عن الموقع · سياسة الخصوصية',
-    '2.9M':'٢٫٩ م','1.8M':'١٫٨ م','1.2M':'١٫٢ م',
-    'Family Fiqh · 1.2M views':'فقه الأسرة · ١٫٢ مليون مشاهدة',
-    'Fiqh · 890K views':'الفقه · ٨٩٠ ألف مشاهدة',
-    'Fiqh · 650K views':'الفقه · ٦٥٠ ألف مشاهدة',
-    'Fiqh · 520K views':'الفقه · ٥٢٠ ألف مشاهدة',
-    'Basic Tenets · 410K views':'أصول الإيمان · ٤١٠ ألف مشاهدة',
-    'Fiqh · 280K views':'الفقه · ٢٨٠ ألف مشاهدة',
-    'Fiqh · 190K views':'الفقه · ١٩٠ ألف مشاهدة',
-    'Your question could be next — contribute to the scholars who answer':'سؤالك قد يكون التالي — ساهم في دعم العلماء الذين يجيبون',
-    'Contribute':'ساهم',
-    'Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.':'كل إجابة في الإسلام سؤال وجواب تُبحث وتُراجع من علماء مؤهلين. مساهمتك تبقي هذه الخدمة مجانية للملايين.',
-    'Your contribution keeps this service free for millions.':'مساهمتك تبقي هذه الخدمة مجانية للملايين.'
+    'Books':'کتاب‌ها',
+    'Send a question':'ارسال سؤال',
+    'Home':'صفحه اصلی',
+    'Family Fiqh':'فقه خانواده',
+    'Menstruation & Post-Natal Bleeding':'حیض و نفاس',
+    'Can You Read the Quran during Your Period?':'آیا زن حائض می‌تواند قرآن بخواند؟',
+    'Sheikh Muhammed Salih Al-Munajjid':'شیخ محمد صالح المنجد',
+    'The Majority View (Prohibition)':'نظر اکثریت (منع)',
+    'The Minority View (Permissibility)':'نظر اقلیت (جواز)',
+    'The Majority View':'نظر اکثریت',
+    'The Minority View':'نظر اقلیت',
+    'Related Questions':'سؤالات مرتبط',
+    'Is Divorce Valid during Menstruation?':'آیا طلاق در حال حیض صحیح است؟',
+    'Sunan al-fitrah during menses':'سنت‌های فطری در دوران حیض',
+    'If the menses lasts longer than usual':'اگر حیض بیش از حد معمول طول بکشد',
+    'Categories':'دسته‌بندی‌ها',
+    'Menstruation':'حیض',
+    'Quran Sciences':'علوم قرآن',
+    'Basic Tenets':'اصول ایمان',
+    'Basic Tenets (131)':'اصول ایمان (۱۳۱)',
+    'Hadith':'حدیث',
+    'Hadith (76)':'حدیث (۷۶)',
+    'Family Fiqh (113)':'فقه خانواده (۱۱۳)',
+    'Quran':'قرآن',
+    'Quran (134)':'قرآن (۱۳۴)',
+    'Fiqh':'فقه',
+    'Most Read Answers':'پرخواننده‌ترین پاسخ‌ها',
+    'Most Read':'پرخواننده‌ترین',
+    'More ›':'بیشتر ‹',
+    'If he was offering a supererogatory prayer and the iqamah...':'اگر نماز نافله می‌خواند و اقامه گفته شد...',
+    'If he was offering a supererogatory prayer...':'اگر نماز نافله می‌خواند و اقامه...',
+    'She is suffering from addiction to the secret habit...':'از اعتیاد به عادت پنهانی رنج می‌برد...',
+    'She is suffering from addiction...':'از اعتیاد به عادت پنهانی رنج می‌برد...',
+    'Is the Angel of Death one angel or many?':'آیا ملک الموت یک فرشته است یا چند؟',
+    'Is Masturbation Haram in Islam?':'آیا استمنا در اسلام حرام است؟',
+    'Is Music Haram?':'آیا موسیقی حرام است؟',
+    'How to Make Ghusl for Major Impurity':'چگونه غسل جنابت انجام دهیم',
+    'What Are the Virtues of Muharram?':'فضیلت‌های ماه محرم چیست؟',
+    'Fasting on Ashura: Complete Guide':'روزه عاشورا: راهنمای کامل',
+    'Ruling on reading Quran without wudu':'حکم خواندن قرآن بدون وضو',
+    '70 Matters Related to Fasting':'هفتاد مسأله در مورد روزه',
+    'Disallowed Matters':'محرمات',
+    'How is the prostration of forgetfulness done in prayer?':'سجده سهو در نماز چگونه انجام می‌شود؟',
+    'How is the prostration of forgetfulness done?':'سجده سهو چگونه انجام می‌شود؟',
+    'The times of the five daily prayers':'اوقات نمازهای پنجگانه',
+    'Can you combine prayers when travelling?':'آیا جمع بین نمازها در سفر جایز است؟',
+    'Can you combine prayers?':'آیا جمع بین نمازها جایز است؟',
+    'Making up missed prayers':'قضای نمازهای فوت شده',
+    'Is it permissible to pray in English?':'آیا نماز خواندن به انگلیسی جایز است؟',
+    'Praying behind an imam who makes mistakes':'نماز خواندن پشت امامی که اشتباه می‌کند',
+    "How many rak'ahs in Taraweeh?":'نماز تراویح چند رکعت است؟',
+    'prayer times':'اوقات نماز',
+    'All':'همه',
+    'Answers':'پاسخ‌ها',
+    '© Islam Q&A 1997-2025 · About · Privacy Policy':'© اسلام پرسش و پاسخ ۱۹۹۷-۲۰۲۵ · درباره · حریم خصوصی',
+    '2.9M':'۲٫۹ م','1.8M':'۱٫۸ م','1.2M':'۱٫۲ م',
+    'Family Fiqh · 1.2M views':'فقه خانواده · ۱٫۲ میلیون بازدید',
+    'Fiqh · 890K views':'فقه · ۸۹۰ هزار بازدید',
+    'Fiqh · 650K views':'فقه · ۶۵۰ هزار بازدید',
+    'Fiqh · 520K views':'فقه · ۵۲۰ هزار بازدید',
+    'Basic Tenets · 410K views':'اصول ایمان · ۴۱۰ هزار بازدید',
+    'Fiqh · 280K views':'فقه · ۲۸۰ هزار بازدید',
+    'Fiqh · 190K views':'فقه · ۱۹۰ هزار بازدید',
+    'Your question could be next — contribute to the scholars who answer':'سؤال بعدی می‌تواند سؤال شما باشد — به علمایی که پاسخ می‌دهند <span class="native-cta">مشارکت</span> کنید',
+    'Contribute':'مشارکت',
+    'Every answer on IslamQA is researched and reviewed by qualified scholars. Your contribution keeps this service free for millions.':'هر پاسخ در اسلام پرسش و پاسخ توسط علمای واجد شرایط تحقیق و بررسی می‌شود. مشارکت شما این خدمت را برای میلیون‌ها نفر رایگان نگه می‌دارد.',
+    'Your contribution keeps this service free for millions.':'مشارکت شما این خدمت را برای میلیون‌ها نفر رایگان نگه می‌دارد.'
   };
   // Prefix-match: answer body paragraphs
   var pMap=[
-    ['Praise be to Allah. This is an important question that concerns','الحمد لله. هذا سؤال مهم يشغل كثيراً من المسلمات. اختلف العلماء في هذه المسألة...'],
-    ['Praise be to Allah. This is an important question','الحمد لله. هذا سؤال مهم يشغل كثيراً من المسلمات...'],
-    ['Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity. Limited','يرى جمهور الفقهاء أن المرأة لا تقرأ القرآن أثناء الحيض حتى تطهر. واستُثنيت بعض العبارات القصيرة...'],
-    ['Most classical jurists hold that women cannot recite Quran','يرى جمهور الفقهاء أن المرأة لا تقرأ القرآن أثناء الحيض حتى تطهر...'],
-    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed, reasoning that no clear evidence explicitly forbids it and that preventing','يرى بعض العلماء ومنهم مالك وابن تيمية جواز القراءة، إذ لا دليل صريح على المنع ومنعها يحرم المرأة من الأجر.'],
-    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed','يرى بعض العلماء ومنهم مالك وابن تيمية جواز القراءة...'],
-    ['Some scholars argue recitation is allowed','يرى بعض العلماء جواز القراءة...'],
-    ['While reciting from memory may be permissible','وإن كانت القراءة من الحفظ قد تجوز عند بعضهم، فإن مسّ المصحف محرّم في حال الحدث.'],
-    ['And Allah knows best','والله أعلم.']
+    ['Praise be to Allah. This is an important question that concerns','الحمد لله. این سؤال مهمی است که بسیاری از زنان مسلمان را به خود مشغول کرده است. علما در این مسأله اختلاف نظر دارند...'],
+    ['Praise be to Allah. This is an important question','الحمد لله. این سؤال مهمی است که بسیاری از زنان مسلمان را مشغول کرده...'],
+    ['Most classical jurists hold that women cannot recite Quran during menstruation until they achieve ritual purity. Limited','اکثر فقهای کلاسیک معتقدند زنان در دوران حیض تا رسیدن به طهارت نمی‌توانند قرآن بخوانند. برخی عبارات کوتاه استثنا شده...'],
+    ['Most classical jurists hold that women cannot recite Quran','اکثر فقهای کلاسیک معتقدند زنان در دوران حیض تا رسیدن به طهارت نمی‌توانند قرآن بخوانند...'],
+    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed, reasoning that no clear evidence explicitly forbids it and that preventing','برخی علما از جمله مالک و ابن تیمیه قرائت را جایز می‌دانند، زیرا دلیل صریحی بر منع وجود ندارد و جلوگیری زن را از اجر محروم می‌کند.'],
+    ['Some scholars, including Malik and Ibn Taymiyah, argue recitation is allowed','برخی علما از جمله مالک و ابن تیمیه قرائت را جایز می‌دانند...'],
+    ['Some scholars argue recitation is allowed','برخی علما قرائت را جایز می‌دانند...'],
+    ['While reciting from memory may be permissible','اگرچه خواندن از حفظ نزد برخی جایز باشد، لمس مصحف در حال حدث حرام است.'],
+    ['And Allah knows best','و الله اعلم.']
   ];
   // Prefix-match: search result snippets
   var sMap=[
-    ['The prostration of forgetfulness is prescribed for three reasons','سجود السهو مشروع لثلاثة أسباب: الزيادة والنقص والشك...'],
-    ['The prostration of forgetfulness is prescribed','سجود السهو مشروع لثلاثة أسباب...'],
-    ['The prostration of forgetfulness','سجود السهو مشروع...'],
-    ['Praise be to Allah. The times of the prayers were mentioned','الحمد لله. بيّن النبي ﷺ مواقيت الصلاة في الحديث...'],
-    ['Praise be to Allah. The times','الحمد لله. بيّن النبي ﷺ مواقيت الصلاة...'],
-    ['It is permissible to combine Zuhr','يجوز الجمع بين الظهر والعصر والمغرب والعشاء عند السفر...'],
-    ['It is permissible to combine','يجوز الجمع بين الصلوات...'],
-    ['The scholars differed regarding the one who deliberately','اختلف العلماء فيمن ترك الصلاة عمداً تكاسلاً...'],
-    ['The scholars differed regarding','اختلف العلماء فيمن ترك الصلاة...'],
-    ['It is not permissible to pray in any language other than Arabic','لا يجوز أداء الصلاة بغير العربية لمن يستطيع تعلمها...'],
-    ['It is not permissible','لا يجوز الصلاة بغير العربية...'],
-    ['If the imam makes a mistake','إذا أخطأ الإمام في قراءة الفاتحة...'],
-    ['The scholars differed concerning the number','اختلف العلماء في عدد ركعات التراويح...'],
-    ['The scholars differed concerning','اختلف العلماء في عدد ركعات التراويح...'],
-    ['The scholars differed','اختلف العلماء...']
+    ['The prostration of forgetfulness is prescribed for three reasons','سجده سهو برای سه دلیل تشریع شده: افزودن، کاستن و شک...'],
+    ['The prostration of forgetfulness is prescribed','سجده سهو برای سه دلیل تشریع شده...'],
+    ['The prostration of forgetfulness','سجده سهو تشریع شده...'],
+    ['Praise be to Allah. The times of the prayers were mentioned','الحمد لله. پیامبر ﷺ اوقات نماز را در حدیث بیان فرموده...'],
+    ['Praise be to Allah. The times','الحمد لله. پیامبر ﷺ اوقات نماز را بیان...'],
+    ['It is permissible to combine Zuhr','جمع بین ظهر و عصر و مغرب و عشا هنگام سفر جایز است...'],
+    ['It is permissible to combine','جمع بین نمازها جایز است...'],
+    ['The scholars differed regarding the one who deliberately','علما درباره کسی که عمداً از روی تنبلی نماز را ترک کند اختلاف دارند...'],
+    ['The scholars differed regarding','علما درباره کسی که نماز را ترک کند اختلاف دارند...'],
+    ['It is not permissible to pray in any language other than Arabic','نماز خواندن به زبانی غیر از عربی برای کسی که توانایی یادگیری دارد جایز نیست...'],
+    ['It is not permissible','نماز خواندن به غیر عربی جایز نیست...'],
+    ['If the imam makes a mistake','اگر امام در قرائت فاتحه اشتباه کند...'],
+    ['The scholars differed concerning the number','علما در تعداد رکعات تراویح اختلاف دارند...'],
+    ['The scholars differed concerning','علما در تعداد رکعات تراویح اختلاف دارند...'],
+    ['The scholars differed','علما اختلاف دارند...']
   ];
   // Helpers
   function tx(el){
     var k=el.textContent.trim();
-    if(lang==='ar'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=el.textContent;el.textContent=m[k]}}
+    if(lang==='fa'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=el.textContent;el.textContent=m[k]}}
     else if(el.dataset.wo){el.textContent=el.dataset.wo;delete el.dataset.wo}
   }
   function tn(el){
@@ -1469,37 +1470,49 @@ function translateWireframes(lang){
     for(var i=nodes.length-1;i>=0;i--){
       if(nodes[i].nodeType===3&&nodes[i].textContent.trim()){
         var k=nodes[i].textContent.trim();
-        if(lang==='ar'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=nodes[i].textContent;nodes[i].textContent=m[k]}}
+        if(lang==='fa'){if(el.dataset.wo)return;if(m[k]){el.dataset.wo=nodes[i].textContent;nodes[i].textContent=m[k]}}
         else if(el.dataset.wo){nodes[i].textContent=el.dataset.wo;delete el.dataset.wo}
         return;
       }
     }
   }
   function pf(el,map){
-    if(lang==='ar'){
+    if(lang==='fa'){
       if(el.dataset.wo)return;var t=el.textContent.trim();
       for(var i=0;i<map.length;i++){if(t.indexOf(map[i][0])===0){el.dataset.wo=el.textContent;el.textContent=map[i][1];return}}
     }else if(el.dataset.wo){el.textContent=el.dataset.wo;delete el.dataset.wo}
   }
-  // A: Simple text elements
+  // A0: Native ad elements (innerHTML to preserve .native-cta span)
+  document.querySelectorAll('.native-ad .q-title, .native-ad .sr-title').forEach(function(el){
+    if(lang==='fa'){if(el.dataset.wo)return;el.dataset.wo=el.innerHTML;el.innerHTML='سؤال بعدی می‌تواند سؤال شما باشد — به علمایی که پاسخ می‌دهند <span class="native-cta">مشارکت</span> کنید'}
+    else if(el.dataset.wo){el.innerHTML=el.dataset.wo;delete el.dataset.wo}
+  });
+  document.querySelectorAll('.native-ad .sr-snip').forEach(function(el){
+    if(lang==='fa'){
+      if(el.dataset.wo)return;var t=el.textContent.trim();el.dataset.wo=el.textContent;
+      if(m[t])el.textContent=m[t];
+      else el.textContent='مشارکت شما این خدمت را برای میلیون‌ها نفر رایگان نگه می‌دارد.';
+    }else if(el.dataset.wo){el.textContent=el.dataset.wo;delete el.dataset.wo}
+  });
+  // A: Simple text elements (native-ad elements already have dataset.wo from A0, so tx() skips them)
   document.querySelectorAll('.iqa-logo,.iqa-contribute,.iqa-lang,.q-main-title,.scholar,.ah,.wt,.wi,.cat-tag,.mr-title,.more-link,.sr-title,.sr-meta,.search-tab,.iqa-footer,.q-title,.mr-views,.iqa-search').forEach(tx);
   // B: Text nodes after icon/bullet spans
   document.querySelectorAll('.si').forEach(tn);
   document.querySelectorAll('.section-title').forEach(tn);
   // C: Search input values
   document.querySelectorAll('.search-input').forEach(function(el){
-    if(lang==='ar'){if(el.dataset.wo)return;var k=el.value.trim();if(m[k]){el.dataset.wo=el.value;el.value=m[k]}}
+    if(lang==='fa'){if(el.dataset.wo)return;var k=el.value.trim();if(m[k]){el.dataset.wo=el.value;el.value=m[k]}}
     else if(el.dataset.wo){el.value=el.dataset.wo;delete el.dataset.wo}
   });
   // D: Breadcrumbs (innerHTML replacement)
   document.querySelectorAll('.breadcrumb').forEach(function(el){
-    if(lang==='ar'){
+    if(lang==='fa'){
       if(el.dataset.wo)return;el.dataset.wo=el.innerHTML;
       var h=el.innerHTML;
-      h=h.replace(/>Home</g,'>الرئيسية<');
-      h=h.replace(/>Family Fiqh</g,'>فقه الأسرة<');
-      h=h.replace(/Menstruation &amp; Post-Natal Bleeding/g,'الحيض والنفاس');
-      h=h.replace(/Menstruation & Post-Natal Bleeding/g,'الحيض والنفاس');
+      h=h.replace(/>Home</g,'>صفحه اصلی<');
+      h=h.replace(/>Family Fiqh</g,'>فقه خانواده<');
+      h=h.replace(/Menstruation &amp; Post-Natal Bleeding/g,'حیض و نفاس');
+      h=h.replace(/Menstruation & Post-Natal Bleeding/g,'حیض و نفاس');
       el.innerHTML=h;
     }else if(el.dataset.wo){el.innerHTML=el.dataset.wo;delete el.dataset.wo}
   });
@@ -1509,21 +1522,21 @@ function translateWireframes(lang){
   document.querySelectorAll('.sr-snip').forEach(function(el){pf(el,sMap)});
   // G: Contextual ad mockup boxes
   document.querySelectorAll('.ctx-card > div[style]').forEach(function(el){
-    if(lang==='ar'){
+    if(lang==='fa'){
       if(el.dataset.wo)return;el.dataset.wo=el.innerHTML;
       var h=el.innerHTML;
-      h=h.replace('Answer #48293','الفتوى رقم ٤٨٢٩٣');
-      h=h.replace('helped someone find clarity today.','ساعدت شخصاً اليوم.');
-      h=h.replace('You can help us keep going →','ساعدنا نستمر ←');
-      h=h.replace('📥 Download complete','📥 اكتمل التحميل');
-      h=h.replace('This fatwa reached you free of charge.','هذه الفتوى وصلتك مجاناً.');
-      h=h.replace('Help us keep Islamic guidance accessible →','ساعدنا نوصل الإرشاد الشرعي للجميع ←');
-      h=h.replace('✉️ Question submitted','✉️ تم إرسال السؤال');
-      h=h.replace('A scholar will review your question soon.','سيراجع عالم سؤالك قريباً.');
-      h=h.replace('Support the scholars who answer →','ادعم العلماء الذين يجيبون ←');
-      h=h.replace('📖 3 answers read today','📖 قرأت ٣ فتاوى اليوم');
-      h=h.replace('Each answer costs time, research, and review.','كل فتوى تحتاج وقتاً وبحثاً ومراجعة.');
-      h=h.replace('Help keep this knowledge free →','ساعد في إبقاء هذا العلم مجاناً ←');
+      h=h.replace('Answer #48293','فتوای شماره ۴۸۲۹۳');
+      h=h.replace('helped someone find clarity today.','امروز به کسی کمک کرد.');
+      h=h.replace('You can help us keep going →','کمک کنید ادامه دهیم ←');
+      h=h.replace('📥 Download complete','📥 دانلود کامل شد');
+      h=h.replace('This fatwa reached you free of charge.','این فتوا رایگان به شما رسید.');
+      h=h.replace('Help us keep Islamic guidance accessible →','کمک کنید راهنمایی شرعی در دسترس همه بماند ←');
+      h=h.replace('✉️ Question submitted','✉️ سؤال ارسال شد');
+      h=h.replace('A scholar will review your question soon.','یک عالم به‌زودی سؤال شما را بررسی خواهد کرد.');
+      h=h.replace('Support the scholars who answer →','از علمایی که پاسخ می‌دهند حمایت کنید ←');
+      h=h.replace('📖 3 answers read today','📖 امروز ۳ فتوا خواندید');
+      h=h.replace('Each answer costs time, research, and review.','هر فتوا نیاز به وقت، تحقیق و بررسی دارد.');
+      h=h.replace('Help keep this knowledge free →','کمک کنید این دانش رایگان بماند ←');
       el.innerHTML=h;
     }else if(el.dataset.wo){el.innerHTML=el.dataset.wo;delete el.dataset.wo}
   });
@@ -1531,15 +1544,15 @@ function translateWireframes(lang){
 
 // Realistic ad banners — copy from actual IslamQA campaigns
 var adCopy=[
-  {en:'Answer no. 12376 taught someone how to invite to Islam.',ar:'الفتوى رقم ١٢٣٧٦ علّمت شخصاً كيف يدعو إلى الإسلام.'},
-  {en:'It takes resources to make an answer as easy as clicking a button.',ar:'إعداد الإجابة يحتاج موارد بقدر سهولة الضغط على زر.'},
-  {en:'Answer no. 170649 refuted arguments against the Quran.',ar:'الفتوى رقم ١٧٠٦٤٩ ردّت على شبهات حول القرآن.'},
-  {en:'As long as people need answers, we need your contributions.',ar:'ما دام الناس يسألون، فنحن بحاجة لمساهماتكم.'},
-  {en:'Answer no. 98682 helped someone to start praying again.',ar:'الفتوى رقم ٩٨٦٨٢ ساعدت شخصاً على العودة للصلاة.'},
-  {en:'Questions require answers, and answers require contributions.',ar:'الأسئلة تحتاج إجابات، والإجابات تحتاج مساهماتكم.'},
-  {en:'Answer no. 107701 taught someone the conditions for prayer.',ar:'الفتوى رقم ١٠٧٧٠١ علّمت شخصاً شروط الصلاة.'},
-  {en:'Answer no. 110845 saved a marriage.',ar:'الفتوى رقم ١١٠٨٤٥ أنقذت زواجاً.'},
-  {en:'Answer no. 3100 led a woman to Islam.',ar:'الفتوى رقم ٣١٠٠ قادت امرأة إلى الإسلام.'}
+  {en:'Answer no. 12376 taught someone how to invite to Islam.',fa:'فتوای شماره ۱۲۳۷۶ به کسی آموخت چگونه به اسلام دعوت کند.'},
+  {en:'It takes resources to make an answer as easy as clicking a button.',fa:'آماده‌سازی هر پاسخ به اندازه سادگی یک کلیک منابع نیاز دارد.'},
+  {en:'Answer no. 170649 refuted arguments against the Quran.',fa:'فتوای شماره ۱۷۰۶۴۹ شبهات علیه قرآن را رد کرد.'},
+  {en:'As long as people need answers, we need your contributions.',fa:'تا زمانی که مردم سؤال دارند، ما به مشارکت شما نیاز داریم.'},
+  {en:'Answer no. 98682 helped someone to start praying again.',fa:'فتوای شماره ۹۸۶۸۲ به کسی کمک کرد دوباره نماز بخواند.'},
+  {en:'Questions require answers, and answers require contributions.',fa:'سؤالات نیاز به پاسخ دارند و پاسخ‌ها نیاز به مشارکت شما.'},
+  {en:'Answer no. 107701 taught someone the conditions for prayer.',fa:'فتوای شماره ۱۰۷۷۰۱ شرایط نماز را به کسی آموخت.'},
+  {en:'Answer no. 110845 saved a marriage.',fa:'فتوای شماره ۱۱۰۸۴۵ یک ازدواج را نجات داد.'},
+  {en:'Answer no. 3100 led a woman to Islam.',fa:'فتوای شماره ۳۱۰۰ زنی را به اسلام هدایت کرد.'}
 ];
 var adColors=[
   {bg:'#e8eef4',text:'#1a3a5c',btn:'#b87333'},
@@ -1571,9 +1584,9 @@ function assignAds(){
 
 function renderAds(){
   var lang=document.documentElement.lang||'en';
-  var sec=lang==='ar'?'نعم، مساهمتك تصنع الفرق.':'Yes, your contribution makes a difference.';
-  var btn=lang==='ar'?'ساهم 🤲':'Contribute 🤲';
-  var dismissLabel=lang==='ar'?'إغلاق الإعلان':'Dismiss ad';
+  var sec=lang==='fa'?'بله، مشارکت شما تفاوت ایجاد می‌کند.':'Yes, your contribution makes a difference.';
+  var btn=lang==='fa'?'مشارکت 🤲':'Contribute 🤲';
+  var dismissLabel=lang==='fa'?'بستن تبلیغ':'Dismiss ad';
   var circled=['','❶','❷','❸','❹','❺','❻','❼','❽'];
   var panelMap=new Map();
   [].slice.call(document.querySelectorAll('.ad-zone[data-ad-i]')).forEach(function(z){
@@ -1586,7 +1599,7 @@ function renderAds(){
     zones.forEach(function(z,idx){
       var ad=adCopy[z.dataset.adI];
       var col=adColors[z.dataset.adC];
-      var primary=lang==='ar'?ad.ar:ad.en;
+      var primary=lang==='fa'?ad.fa:ad.en;
       var num=idx+1;
       z.classList.add('has-ad');
       z.setAttribute('role','complementary');
