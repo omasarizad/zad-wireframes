@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap');
 :root{
 --biz:#d97706;--biz-bg:#fffbeb;--ux:#6366f1;--ux-bg:#eef2ff;--bal:#0284c7;--bal-bg:#f0f9ff;
---ad:#8b5cf6;--ad-bg:#f5f3ff;--ad-border:#a78bfa;
+--ad:#22c55e;--ad-bg:#f0fdf4;--ad-border:#86efac;
 --iqa:#0f9d58;--iqa-dk:#0b7a45;
 --g50:#fafafa;--g100:#f4f4f5;--g200:#e4e4e7;--g300:#d4d4d8;--g400:#a1a1aa;--g500:#71717a;--g600:#52525b;--g700:#3f3f46;--g800:#27272a;--g900:#18181b;
 --r:12px;--rs:8px;--sh:0 1px 3px rgba(0,0,0,.08);
@@ -180,11 +180,11 @@ html[lang="fa"] .ad-zone.has-ad{text-align:right}
 .ad-zone{opacity:1!important;z-index:2}
 .iqa-footer{padding:8px 14px;background:var(--g100);border-top:1px solid var(--g200);font-size:8px;color:var(--g400);text-align:center}
 .native-ad{border:1px solid var(--ad-border)!important;background:var(--ad-bg)!important;position:relative;opacity:1!important}
-.native-ad .q-title{color:#5b21b6!important;font-weight:700!important}
-.native-ad .q-meta{color:#6d28d9!important;opacity:.85}
-.native-ad .sr-title{color:#5b21b6!important;font-weight:700!important}
-.native-ad .sr-snip{color:#6d28d9!important;opacity:.85}
-.native-ad .sr-meta{color:#7c3aed!important}
+.native-ad .q-title{color:#166534!important;font-weight:700!important}
+.native-ad .q-meta{color:#15803d!important;opacity:.85}
+.native-ad .sr-title{color:#166534!important;font-weight:700!important}
+.native-ad .sr-snip{color:#15803d!important;opacity:.85}
+.native-ad .sr-meta{color:#22c55e!important}
 .native-cta{text-decoration:underline;cursor:pointer}
 .native-ad-footnote{font-size:9px;color:var(--g400);margin-top:6px;font-style:italic;padding:4px 0;border-top:1px solid var(--g200)}
 .ad-ref{font-size:.65em;vertical-align:super;font-weight:600;opacity:.7;margin-left:1px;line-height:1}
@@ -1145,7 +1145,7 @@ html[lang="fa"] .sr-meta{direction:rtl}
 <tr><td><strong>Dismiss behavior</strong></td><td><code>sessionStorage</code></td><td>Key: <code>dismissed-{zoneId}</code>. Non-redisplay within same session. Resets on new session/tab.</td></tr>
 <tr><td><strong>RTL support</strong></td><td>Full mirroring</td><td>Sidebar flips to right. Ad dismiss button mirrors. CTA alignment mirrors. All text direction via <code>dir="rtl"</code>.</td></tr>
 <tr><td><strong>Accessibility</strong></td><td>WCAG 2.1 AA</td><td>Ad zones: <code>role="complementary"</code> + <code>aria-label</code>. Dismiss button: visible focus ring, <code>aria-label="Dismiss ad"</code>. Contrast ratios meet 4.5:1 minimum.</td></tr>
-<tr><td><strong>Native card</strong></td><td>Fluid width</td><td>Inherits parent container width. Purple border <code>#a78bfa</code>, bg <code>#f5f3ff</code>. Title <code>#5b21b6</code> (7.2:1 contrast). No "Sponsored" label.</td></tr>
+<tr><td><strong>Native card</strong></td><td>Fluid width</td><td>Inherits parent container width. Green border <code>#86efac</code>, bg <code>#f0fdf4</code>. Title <code>#166534</code> (7.8:1 contrast). No "Sponsored" label.</td></tr>
 <tr><td><strong>Sticky bottom (mobile)</strong></td><td>320 × 50</td><td>Max 10% viewport. Dismiss persists via sessionStorage. Does not overlay content scroll.</td></tr>
 <tr><td><strong>Question submission</strong></td><td>Never obstructed</td><td>No ad covers "Send a question" link, search bar, or form submit buttons.</td></tr>
 <tr><td><strong>Book/fatwa download</strong></td><td>Never obstructed</td><td>Download/print actions remain accessible. Post-download CTA appears after action completes.</td></tr>
